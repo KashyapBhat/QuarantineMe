@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1047792429449",
+    "firebase_url": "https://yajurvedaapp.firebaseio.com",
+    "project_id": "yajurvedaapp",
+    "storage_bucket": "yajurvedaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047792429449:android:040f69e2c0425bd2729958",
+        "android_client_info": {
+          "package_name": "kashyapbhat.in.yajurvedaproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047792429449-birp1ls4kl1u5q6snnr715gnm0f2ck5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUDzWm3xgWNvt_-jFCFt0EaaO15F9jUF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047792429449-birp1ls4kl1u5q6snnr715gnm0f2ck5m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

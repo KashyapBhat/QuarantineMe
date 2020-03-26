@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".base.BaseActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/toolbarText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_16dp"
+            android:paddingEnd="@dimen/_16dp"
+            android:text="ಸಂಧ್ಯಾವಂದನೆ"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20sp" />
+    </RelativeLayout>
+
+
+    <ViewStub
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/rlLoader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey">
+
+        <ProgressBar
+            android:id="@+id/baseProgress"
+            android:layout_width="@dimen/_35dp"
+            android:layout_height="@dimen/_35dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navOne"
+        android:icon="@drawable/brightness"
+        android:title="@string/menu_one" />
+
+    <item
+        android:id="@+id/navTwo"
+        android:icon="@drawable/orientation"
+        android:title="@string/menu_two" />
+
+    <item
+        android:id="@+id/navThree"
+        android:icon="@drawable/reminder"
+        android:title="@string/menu_three" />
+
+    <item
+        android:id="@+id/navFour"
+        android:icon="@drawable/share"
+        android:title="@string/menu_four" />
+</menu>

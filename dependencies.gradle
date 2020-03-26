@@ -1,0 +1,13 @@
+ext.versions = [
+
+        appcompat         : '1.1.0',
+        kotlin_core       : '1.0.2',
+        contraint_layout  : '1.1.3',
+        junit             : '4.12',
+        junit_test        : '1.1.0',
+        espresso          : '3.2.0',
+        butter_knife      : '10.2.0',
+        firebase_analytics: '17.2.0'
+
+]
+
