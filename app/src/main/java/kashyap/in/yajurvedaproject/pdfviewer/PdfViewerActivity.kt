@@ -3,6 +3,7 @@ package kashyap.`in`.yajurvedaproject.pdfviewer
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -277,6 +278,10 @@ class PdfViewerActivity : BaseActivity(), CustomWebViewClient.WebViewClientIntf,
 
     override fun onAllPermissionsAcquired() {
         startProcesses()
+    }
+
+    override fun onLocationResult(location: Location?) {
+
     }
 
     override fun loadingStarted() {

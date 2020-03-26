@@ -1,39 +1,55 @@
 package kashyap.`in`.yajurvedaproject.base
 
+import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
+import android.location.Location
 import android.os.ParcelFileDescriptor
+import android.preference.PreferenceManager
+import android.preference.PreferenceManager.OnActivityResultListener
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewStub
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import kashyap.`in`.yajurvedaproject.BuildConfig
-import kashyap.`in`.yajurvedaproject.common.*
-import kashyap.`in`.yajurvedaproject.receivers.NetworkReceiver
+import kashyap.`in`.yajurvedaproject.R
+import kashyap.`in`.yajurvedaproject.common.DEFAULT_MIN_APP_VERSION
+import kashyap.`in`.yajurvedaproject.common.FS_MIN_APP_VERSION_KEY
+import kashyap.`in`.yajurvedaproject.common.INTENT_CONNECTIVITY_CHANGE
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
-import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
+import kashyap.`in`.yajurvedaproject.receivers.NetworkReceiver
+import kashyap.`in`.yajurvedaproject.utils.*
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.updateUppFromPlaystore
 import kashyap.`in`.yajurvedaproject.utils.PermissionsHandler.checkAndRequestPermissions
 import kashyap.`in`.yajurvedaproject.utils.PermissionsHandler.isIsPermissionsChecksRunning
-import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.activity_base.*
 import java.io.File
+import android.view.View as View1
 
 
-abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChangeListener {
+abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChangeListener,
+    LocationCallbacks {
 
     private lateinit var baseLayout: RelativeLayout
     private lateinit var networkReceiver: NetworkReceiver
     protected lateinit var context: Context
+    protected var locationFetcher: LocationUtils? = null
     private var customSnackbar: CustomSnackbar? = null
+    private var onActivityResultListener: OnActivityResultListener? = null
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
@@ -54,20 +70,21 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
 
     fun initView() {
         hideProgress()
+        locationFetcher = LocationUtils(context, this)
     }
 
-    fun showProgress() {
-        rlLoader.visibility = View.VISIBLE
-        baseProgress.visibility = View.VISIBLE
+    override fun showProgress() {
+        rlLoader.visibility = View1.VISIBLE
+        baseProgress.visibility = View1.VISIBLE
         window.setFlags(
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
         )
     }
 
-    fun hideProgress() {
-        rlLoader.visibility = View.GONE
-        baseProgress.visibility = View.GONE
+    override fun hideProgress() {
+        rlLoader.visibility = View1.GONE
+        baseProgress.visibility = View1.GONE
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
@@ -189,17 +206,58 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     }
 
     private fun showToolbar() {
-        toolbar.visibility = View.VISIBLE
-        toolbarText.visibility = View.VISIBLE
+        toolbar.visibility = View1.VISIBLE
+        toolbarText.visibility = View1.VISIBLE
     }
 
     private fun hideToolbar() {
-        toolbar.visibility = View.GONE
-        toolbarText.visibility = View.GONE
+        toolbar.visibility = View1.GONE
+        toolbarText.visibility = View1.GONE
     }
 
     fun checkOrientation(): Int {
         return resources.configuration.orientation
     }
 
+    fun addFragment(activity: BaseActivity, baseFragment: BaseFragment?, @IdRes containerId: Int) {
+        GeneralUtils.transact(activity, baseFragment, false, containerId)
+    }
+
+    fun replaceFragment(
+        activity: BaseActivity,
+        baseFragment: BaseFragment?, @IdRes containerId: Int
+    ) {
+        GeneralUtils.transact(activity, baseFragment, true, containerId)
+    }
+
+    fun getLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            locationFetcher?.initiateCurrentLocation()
+        }
+    }
+
+    abstract override fun onLocationResult(location: Location?)
+    override fun onGpsUnavailable() {
+    }
+
+    override fun registerActivityResult(onActivityResultListener: PreferenceManager.OnActivityResultListener) {
+        this.onActivityResultListener = onActivityResultListener;
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CHECK_SETTINGS -> onActivityResultListener?.onActivityResult(
+                    requestCode,
+                    resultCode,
+                    data
+                )
+            }
+        }
+    }
 }

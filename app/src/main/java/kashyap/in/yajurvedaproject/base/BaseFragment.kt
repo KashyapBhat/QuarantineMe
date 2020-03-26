@@ -7,7 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.transact
 
 
 abstract class BaseFragment : Fragment() {
@@ -61,5 +64,16 @@ abstract class BaseFragment : Fragment() {
     fun hideProgress() {
         if (activity != null && activity is BaseActivity)
             (activity as BaseActivity).hideProgress()
+    }
+
+    fun addFragment(activity: BaseActivity, baseFragment: BaseFragment?, @IdRes containerId: Int) {
+        transact(activity, baseFragment, false, containerId)
+    }
+
+    fun replaceFragment(
+        activity: BaseActivity,
+        baseFragment: BaseFragment?, @IdRes containerId: Int
+    ) {
+        transact(activity, baseFragment, true, containerId)
     }
 }

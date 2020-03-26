@@ -10,7 +10,11 @@
     <dimen name="_3dp">3dp</dimen>
     <dimen name="_4dp">4dp</dimen>
     <dimen name="_48dp">48dp</dimen>
+    <dimen name="font_12sp">12sp</dimen>
+    <dimen name="font_13sp">13sp</dimen>
     <dimen name="font_20sp">20sp</dimen>
+    <dimen name="font_24sp">24sp</dimen>
+    <dimen name="font_30sp">30sp</dimen>
     <dimen name="_40dp">40dp</dimen>
     <dimen name="_20dp">20dp</dimen>
     <dimen name="_10dp">10dp</dimen>

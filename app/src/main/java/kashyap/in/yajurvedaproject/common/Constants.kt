@@ -37,6 +37,9 @@ const val REMINDER_WORKER = "REMINDER_WORKER"
 
 //SharedPref keys
 const val IS_REMINDER_ALREADY_SET = "isReminderAlreadySet"
+const val IS_QUARANTINED = "ISQuarantined"
+const val LATITUDE = "Latitude"
+const val LONGITUDE = "Longitude"
 
 
 //View related

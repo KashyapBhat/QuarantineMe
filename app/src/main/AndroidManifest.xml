@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="kashyap.in.yajurvedaproject">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,6 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".nonquarantine.NonQuarantineActivity"></activity>
+        <activity android:name=".quarantine.QuarantineActivity" />
+        <activity android:name=".userseperation.SeparationActivity" />
+        <activity android:name=".splash.SplashActivity" />
         <activity
             android:name=".pdfviewer.PdfViewerActivity"
             android:configChanges="orientation|screenSize"
@@ -41,9 +46,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".base.BaseActivity">
-
-        </activity>
+        <activity android:name=".base.BaseActivity" />
     </application>
 
 </manifest>

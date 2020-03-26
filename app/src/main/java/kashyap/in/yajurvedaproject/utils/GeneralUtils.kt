@@ -24,6 +24,14 @@ import android.app.PendingIntent
 import android.media.RingtoneManager
 import androidx.core.content.ContextCompat.getSystemService
 import android.app.NotificationManager
+import android.view.LayoutInflater
+import androidx.annotation.IdRes
+import androidx.fragment.app.FragmentManager
+import kashyap.`in`.yajurvedaproject.base.BaseActivity
+import kashyap.`in`.yajurvedaproject.base.BaseFragment
+import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
+import kashyap.`in`.yajurvedaproject.nonquarantine.NonQuarantineActivity
+import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 
 
 /**
@@ -166,8 +174,10 @@ class GeneralUtils {
 
         fun getPermissionRequired(): List<String> {
             return listOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
             )
         }
 
@@ -206,6 +216,34 @@ class GeneralUtils {
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
             notificationManager?.notify(0, mBuilder.build())
+        }
+
+        fun transact(
+            activity: BaseActivity?,
+            baseFragment: BaseFragment?,
+            shouldReplace: Boolean?, @IdRes containerId: Int
+        ) {
+            if (containerId == -1) {
+                return
+            }
+            if (shouldReplace == true) {
+                activity?.supportFragmentManager?.popBackStack(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
+            }
+            val transaction =
+                activity?.supportFragmentManager?.beginTransaction()
+            baseFragment?.let { transaction?.replace(containerId, it)?.addToBackStack(null) }
+            transaction?.commit()
+        }
+
+        fun handleQuarantinedOrNot(context: Context) {
+            if (PrefUtils.getFromPrefs(context, IS_QUARANTINED, false) as Boolean) {
+                context.startActivity(Intent(context, QuarantineActivity::class.java))
+            } else {
+                context.startActivity(Intent(context, NonQuarantineActivity::class.java))
+            }
         }
     }
 }
