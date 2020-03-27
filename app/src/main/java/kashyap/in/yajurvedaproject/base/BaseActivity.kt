@@ -70,7 +70,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
 
     fun initView() {
         hideProgress()
-        locationFetcher = LocationUtils(context, this)
+        locationFetcher = LocationUtils(this, this)
     }
 
     override fun showProgress() {
@@ -230,8 +230,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
         GeneralUtils.transact(activity, baseFragment, true, containerId)
     }
 
-    fun
-            getLocation() {
+    fun getLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
