@@ -219,6 +219,10 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
         return resources.configuration.orientation
     }
 
+    fun openSettings() {
+        startActivityForResult(Intent(android.provider.Settings.ACTION_SETTINGS), 0)
+    }
+
     fun addFragment(activity: BaseActivity, baseFragment: BaseFragment?, @IdRes containerId: Int) {
         GeneralUtils.transact(activity, baseFragment, false, containerId)
     }
