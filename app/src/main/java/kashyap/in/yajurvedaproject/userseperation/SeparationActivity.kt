@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
@@ -61,6 +62,7 @@ class SeparationActivity : BaseActivity() {
     }
 
     override fun onLocationResult(location: Location?) {
+        Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
         saveUserDataToPrefs(location)
         handleNextScreen()
     }
