@@ -177,7 +177,7 @@ class GeneralUtils {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
             )
         }
 
@@ -238,12 +238,13 @@ class GeneralUtils {
             transaction?.commit()
         }
 
-        fun handleQuarantinedOrNot(context: Context) {
+        fun handleQuarantinedOrNot(context: Activity) {
             if (PrefUtils.getFromPrefs(context, IS_QUARANTINED, false) as Boolean) {
                 context.startActivity(Intent(context, QuarantineActivity::class.java))
             } else {
                 context.startActivity(Intent(context, NonQuarantineActivity::class.java))
             }
+            context.finish()
         }
     }
 }

@@ -70,7 +70,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
 
     fun initView() {
         hideProgress()
-        locationFetcher = LocationUtils(context, this)
+        locationFetcher = LocationUtils(this, this)
     }
 
     override fun showProgress() {
@@ -217,6 +217,10 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
 
     fun checkOrientation(): Int {
         return resources.configuration.orientation
+    }
+
+    fun openSettings() {
+        startActivityForResult(Intent(android.provider.Settings.ACTION_SETTINGS), 0)
     }
 
     fun addFragment(activity: BaseActivity, baseFragment: BaseFragment?, @IdRes containerId: Int) {

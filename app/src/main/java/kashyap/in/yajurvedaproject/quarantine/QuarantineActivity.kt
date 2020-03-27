@@ -3,6 +3,7 @@ package kashyap.`in`.yajurvedaproject.quarantine
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 
@@ -22,6 +23,6 @@ class QuarantineActivity : BaseActivity() {
     }
 
     override fun onLocationResult(location: Location?) {
-        // TODO: Handle if not in same place
+        Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
     }
 }

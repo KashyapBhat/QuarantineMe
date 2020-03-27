@@ -10,10 +10,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:allowBackup="true"
@@ -22,20 +24,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".nonquarantine.NonQuarantineActivity"></activity>
-        <activity android:name=".quarantine.QuarantineActivity" />
-        <activity android:name=".userseperation.SeparationActivity" />
-        <activity android:name=".splash.SplashActivity" />
         <activity
-            android:name=".pdfviewer.PdfViewerActivity"
+            android:name=".nonquarantine.NonQuarantineActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".quarantine.QuarantineActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".userseperation.SeparationActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".pdfviewer.PdfViewerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".receivers.NetworkReceiver"
