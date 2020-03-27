@@ -230,7 +230,8 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
         GeneralUtils.transact(activity, baseFragment, true, containerId)
     }
 
-    fun getLocation() {
+    fun
+            getLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION

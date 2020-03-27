@@ -20,13 +20,13 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun handleUserInfoIsStoredOrNot() {
-        if (PrefUtils.hasKey(this, IS_QUARANTINED)) {
-            GeneralUtils.handleQuarantinedOrNot(this)
-        } else {
-            Handler().postDelayed({
+        Handler().postDelayed({
+            if (PrefUtils.hasKey(this, IS_QUARANTINED)) {
+                GeneralUtils.handleQuarantinedOrNot(this)
+            } else {
                 startActivity(Intent(this, SeparationActivity::class.java))
                 finish()
-            }, 2 * 1000)
-        }
+            }
+        }, 3 * 1000)
     }
 }
