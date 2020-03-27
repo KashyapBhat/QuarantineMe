@@ -23,7 +23,7 @@ import java.util.concurrent.Executors
 class SplashActivity : BaseActivity() {
 
     private var myBiometricPrompt: BiometricPrompt? = null
-
+    private var promptInfo: PromptInfo? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_activity)
@@ -31,13 +31,11 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        Handler().postDelayed({
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                biometrics()
-            } else {
-                handleUserInfoIsStoredOrNot()
-            }
-        }, 3 * 1000)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            biometrics()
+        } else {
+            Handler().postDelayed({ handleUserInfoIsStoredOrNot() }, 3 * 1000)
+        }
     }
 
     private fun handleUserInfoIsStoredOrNot() {
@@ -46,6 +44,7 @@ class SplashActivity : BaseActivity() {
         } else {
             startActivity(Intent(this, SeparationActivity::class.java))
             finish()
+            overridePendingTransition(R.anim.enter, R.anim.exit)
         }
     }
 
@@ -53,29 +52,31 @@ class SplashActivity : BaseActivity() {
     private fun biometrics() {
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate()) {
-            BiometricManager.BIOMETRIC_SUCCESS ->
-                checkBiometrics()
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE, BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
                 handleUserInfoIsStoredOrNot()
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
                 showSnackBar("Please enable fingerprint / face detection before we go ahead",
                     "Go to settings",
                     Runnable { openSettings() })
+            else -> checkBiometrics()
         }
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private fun checkBiometrics() {
         val newExecutor: Executor = Executors.newSingleThreadExecutor()
         if (myBiometricPrompt == null)
             myBiometricPrompt = getBiometricPrompt(newExecutor)
-        val promptInfo = PromptInfo.Builder()
-            .setTitle("Biometric")
-            .setSubtitle("Please use our fingerprint / face recognition")
-            .setDescription("")
-            .setNegativeButtonText("Cancel")
-            .build()
-        myBiometricPrompt?.authenticate(promptInfo)
+        if (promptInfo == null)
+            promptInfo = PromptInfo.Builder()
+                .setTitle("Biometric")
+                .setSubtitle("Please use our fingerprint / face recognition")
+                .setDescription("")
+                .setNegativeButtonText("Cancel")
+                .build()
+        if (promptInfo != null)
+            myBiometricPrompt?.authenticate(promptInfo!!)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -89,11 +90,6 @@ class SplashActivity : BaseActivity() {
                 ) {
                     super.onAuthenticationError(errorCode, errString)
                     when (errorCode) {
-                        BiometricPrompt.ERROR_NEGATIVE_BUTTON, BiometricPrompt.ERROR_USER_CANCELED, BiometricPrompt.ERROR_CANCELED ->
-                            showSnackBar(
-                                "Please use biometrics to get inside the app",
-                                "Okay",
-                                Runnable { checkBiometrics() })
                         BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_UNABLE_TO_PROCESS, BiometricConstants.ERROR_HW_NOT_PRESENT ->
                             handleUserInfoIsStoredOrNot()
                     }
@@ -101,17 +97,28 @@ class SplashActivity : BaseActivity() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    handleUserInfoIsStoredOrNot()
+                    runOnUiThread {
+                        handleUserInfoIsStoredOrNot()
+                    }
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    showSnackBar(
-                        "Authentication error",
-                        "Retry",
-                        Runnable { checkBiometrics() })
+                    runOnUiThread {
+                        showSnackBar(
+                            "Authentication error",
+                            "Retry",
+                            Runnable { restartBiometrics() })
+                    }
                 }
             })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun restartBiometrics() {
+        finish()
+        startActivity(intent)
+        overridePendingTransition(R.anim.enter, R.anim.exit)
     }
 
     override fun networkChanged() {
