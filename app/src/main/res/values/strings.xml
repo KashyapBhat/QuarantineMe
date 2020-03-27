@@ -25,4 +25,8 @@
     <string name="utf_8">UTF-8</string>
     <string name="not_below_m">This functionality works only for devices after OS version Marshmallow</string>
     <string name="sorry">Sorry!</string>
+    <string name="opt1">Opt1</string>
+    <string name="opt2">opt2</string>
+    <string name="opt3">opt3</string>
+    <string name="opt4">opt4</string>
 </resources>
