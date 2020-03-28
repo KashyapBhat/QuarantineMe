@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/qmmi1"
+        android:icon="@drawable/qmhome"
+        android:title="@string/opt1" />
+
+    <item
+        android:id="@+id/qmmi2"
+        android:icon="@drawable/qmasm"
+        android:title="@string/opt2" />
+
+    <item
+        android:id="@+id/qmmi3"
+        android:icon="@drawable/qmact"
+        android:title="@string/opt3" />
+
+    <item
+        android:id="@+id/qmmi4"
+        android:icon="@drawable/qmac"
+        android:title="@string/opt4" />
+</menu>
