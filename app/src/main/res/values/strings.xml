@@ -26,7 +26,7 @@
     <string name="not_below_m">This functionality works only for devices after OS version Marshmallow</string>
     <string name="sorry">Sorry!</string>
     <string name="opt1">Home</string>
-    <string name="opt2">opt2</string>
+    <string name="opt2">Info</string>
     <string name="opt3">Activities</string>
     <string name="opt4">Profile</string>
 </resources>

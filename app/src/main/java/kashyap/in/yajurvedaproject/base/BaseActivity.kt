@@ -70,6 +70,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
 
     fun initView() {
         hideProgress()
+        hideToolbar()
         locationFetcher = LocationUtils(this, this)
     }
 

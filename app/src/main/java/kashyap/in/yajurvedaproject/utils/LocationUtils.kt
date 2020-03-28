@@ -20,7 +20,6 @@ class LocationUtils(val context: Context, private val mLocationCallback: Locatio
 
     private val UPDATE_INTERVAL_IN_MILLISECONDS = 10 * 1000L // every 10 secs
 
-    private var isFetchingLocation: Boolean = false
     private var mLocationRequest: LocationRequest? = null
     private var mFusedLocationClient: FusedLocationProviderClient? =
         FusedLocationProviderClient(context)
@@ -36,7 +35,7 @@ class LocationUtils(val context: Context, private val mLocationCallback: Locatio
         }
     }
 
-    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     fun initiateCurrentLocation() {
         createLocationRequest()
         mLocationCallback.registerActivityResult(this)
@@ -46,13 +45,10 @@ class LocationUtils(val context: Context, private val mLocationCallback: Locatio
     private fun createFusedLocationClient() {
         if (mFusedLocationClient == null)
             mFusedLocationClient = FusedLocationProviderClient(context)
-        if (!isFetchingLocation) {
-            isFetchingLocation = true
-            mFusedLocationClient?.requestLocationUpdates(
-                mLocationRequest, locationCallback,
-                Looper.myLooper()
-            )
-        }
+        mFusedLocationClient?.requestLocationUpdates(
+            mLocationRequest, locationCallback,
+            null
+        )
     }
 
     private fun createLocationRequest() {
@@ -64,7 +60,7 @@ class LocationUtils(val context: Context, private val mLocationCallback: Locatio
         }
     }
 
-    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     private fun displayLocationSettingsRequest(context: Context) {
         val builder = LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest!!)
         val client = LocationServices.getSettingsClient(context)
@@ -94,7 +90,7 @@ class LocationUtils(val context: Context, private val mLocationCallback: Locatio
             }
     }
 
-    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION])
     private fun getCurrentLocation(canGetLocation: Boolean = true) {
         if (canGetLocation && context is Activity) {
             mLocationCallback.showProgress()
@@ -109,15 +105,13 @@ class LocationUtils(val context: Context, private val mLocationCallback: Locatio
                             } else {
                                 mFusedLocationClient!!.removeLocationUpdates(locationCallback)
                                 mLocationCallback.onLocationResult(it.result)
-                                isFetchingLocation = false
                                 mLocationCallback.hideProgress()
                             }
                         }
                         false -> mLocationCallback.onLocationResult(null)
                     }
                 }
-        }
-        mLocationCallback.onLocationResult(null)
+        } else mLocationCallback.onLocationResult(null)
     }
 
     @SuppressLint("MissingPermission")

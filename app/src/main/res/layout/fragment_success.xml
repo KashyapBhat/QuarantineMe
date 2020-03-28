@@ -11,6 +11,7 @@
         android:background="@drawable/round_corner_rectangle">
 
         <ImageView
+            android:id="@+id/ivCross"
             android:layout_width="@dimen/_30dp"
             android:layout_height="@dimen/_30dp"
             android:layout_alignParentEnd="true"
@@ -40,10 +41,10 @@
 
         <TextView
             android:id="@+id/tvSuccessDesc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSuccess"
-            android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="We have successfully completed your on-boarding process." />
 
         <Button
@@ -51,6 +52,7 @@
             style="@style/Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:text="Next" />
     </RelativeLayout>
 

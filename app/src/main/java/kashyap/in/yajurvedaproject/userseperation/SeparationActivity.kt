@@ -1,23 +1,15 @@
 package kashyap.`in`.yajurvedaproject.userseperation
 
-import android.Manifest
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.IdRes
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentManager
+import android.view.View
+import android.widget.Toast
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
-import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
 import kashyap.`in`.yajurvedaproject.common.LATITUDE
 import kashyap.`in`.yajurvedaproject.common.LONGITUDE
-import kashyap.`in`.yajurvedaproject.nonquarantine.NonQuarantineActivity
-import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.activity_separation.*
@@ -62,6 +54,18 @@ class SeparationActivity : BaseActivity() {
     }
 
     override fun onLocationResult(location: Location?) {
+        hideProgress()
+        if (location == null)
+            Toast.makeText(
+                this,
+                "We are .....",
+                Toast.LENGTH_LONG
+            ).show()
+        Toast.makeText(
+            this,
+            "Location ::::" + " Lat: " + location?.latitude + "long: " + location?.longitude,
+            Toast.LENGTH_LONG
+        ).show()
         Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
         saveUserDataToPrefs(location)
         handleNextScreen()
@@ -74,6 +78,8 @@ class SeparationActivity : BaseActivity() {
     }
 
     private fun handleNextScreen() {
+        rlQALayout.visibility = View.GONE
+        flContainer.visibility = View.VISIBLE
         replaceFragment(this, SuccessFragment.newInstance(), R.id.flContainer)
     }
 }

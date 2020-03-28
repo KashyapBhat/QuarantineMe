@@ -31,7 +31,9 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+            PrefUtils.hasKey(this, IS_QUARANTINED)
+        ) {
             biometrics()
         } else {
             Handler().postDelayed({ handleUserInfoIsStoredOrNot() }, 3 * 1000)

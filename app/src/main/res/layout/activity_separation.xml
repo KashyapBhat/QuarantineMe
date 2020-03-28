@@ -9,43 +9,49 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:padding="@dimen/_5dp"
-        android:text="Are you under quarantine?"
-        android:textSize="@dimen/font_24sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btQuarantine"
-        style="@style/SeparationButton"
+    <RelativeLayout
+        android:id="@+id/rlQALayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btIsolated"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="330dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:layout_marginBottom="@dimen/_30dp"
-        android:gravity="center"
-        android:padding="@dimen/_16dp"
-        android:text="Yes"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btIsolated"
-        style="@style/SeparationButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:layout_marginBottom="@dimen/_30dp"
-        android:gravity="center"
-        android:padding="@dimen/_16dp"
-        android:text="No"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="300dp"
+            android:padding="@dimen/_5dp"
+            android:text="Are you under quarantine?"
+            android:textSize="@dimen/font_24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btQuarantine"
+            style="@style/SeparationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btIsolated"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="330dp"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:gravity="center"
+            android:padding="@dimen/_16dp"
+            android:text="Yes"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btIsolated"
+            style="@style/SeparationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:gravity="center"
+            android:padding="@dimen/_16dp"
+            android:text="No"
+            android:textStyle="bold" />
+    </RelativeLayout>
 </RelativeLayout>

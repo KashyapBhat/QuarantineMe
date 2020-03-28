@@ -40,5 +40,8 @@ class SuccessFragment : BaseFragment() {
         btSuccess.setOnClickListener {
             getActivity()?.let { it1 -> GeneralUtils.handleQuarantinedOrNot(it1) }
         }
+        ivCross.setOnClickListener {
+            getActivity()?.let { it1 -> GeneralUtils.handleQuarantinedOrNot(it1) }
+        }
     }
 }
