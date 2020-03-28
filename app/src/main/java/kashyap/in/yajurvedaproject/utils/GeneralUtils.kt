@@ -1,39 +1,35 @@
 package kashyap.`in`.yajurvedaproject.utils
 
 import android.Manifest
+import android.R
 import android.app.Activity
 import android.app.Dialog
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Handler
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.View
+import android.view.Window
 import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
-import java.util.*
-import kotlin.concurrent.schedule
-import androidx.core.content.ContextCompat.startActivity
-import kashyap.`in`.yajurvedaproject.BuildConfig
-import android.R
-import androidx.core.app.NotificationCompat
-import android.app.PendingIntent
-import android.media.RingtoneManager
-import androidx.core.content.ContextCompat.getSystemService
-import android.app.NotificationManager
-import android.view.LayoutInflater
-import android.view.Window
 import androidx.annotation.IdRes
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.FragmentManager
+import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.nonquarantine.NonQuarantineActivity
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
+import kashyap.`in`.yajurvedaproject.splash.SplashActivity
 
 
 /**
@@ -202,20 +198,25 @@ class GeneralUtils {
 
         }
 
-        public fun createNotification(context: Context, title: String, desc: String, icon: Int) {
-            val emptyIntent = Intent()
+        fun createNotification(context: Context, title: String, desc: String, icon: Int) {
+            val intent: Intent = Intent(context, SplashActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            val intent = Intent()
             val pendingIntent = PendingIntent.getActivity(
                 context,
                 0,
-                emptyIntent,
+                intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
+            val defaultSound =
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             val mBuilder = NotificationCompat.Builder(context)
                 .setSmallIcon(icon)
                 .setContentTitle(title)
                 .setContentText(desc)
                 .setContentIntent(pendingIntent)
                 .setChannelId("asas")
+                .setSound(defaultSound)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?

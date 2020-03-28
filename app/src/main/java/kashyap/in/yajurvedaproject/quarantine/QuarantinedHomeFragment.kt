@@ -19,9 +19,8 @@ import kashyap.`in`.yajurvedaproject.common.COUNT_DOWN_START_TIME
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_quarantined_home.*
 
-
 class QuarantinedHomeFragment : BaseFragment() {
-    private var url: String = ""
+
     private val CAMERA_REQUEST = 1888
 
     companion object {
