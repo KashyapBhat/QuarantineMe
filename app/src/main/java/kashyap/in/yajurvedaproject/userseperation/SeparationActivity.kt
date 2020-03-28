@@ -36,10 +36,10 @@ class SeparationActivity : BaseActivity() {
     override fun onAllPermissionsAcquired() {
         GeneralUtils.showDialogWithButtons(
             context,
-            "Is this where you will be staying isolated?",
-            "",
+            "Consider the current location as your home location?",
+            "We need the location where you will be staying quarantined.",
             "No",
-            "Yes",
+            "Sure",
             Runnable { askToIsolate() },
             Runnable { getLocation() },
             false
@@ -49,7 +49,7 @@ class SeparationActivity : BaseActivity() {
 
     private fun askToIsolate() {
         showSnackBar(
-            "Please come back after you isolated yourself", "Okay", null
+            "Please come back after you isolated / quarantine yourself", "Okay", null
         )
     }
 

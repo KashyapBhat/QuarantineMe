@@ -20,6 +20,7 @@
             android:layout_marginEnd="@dimen/_32dp"
             android:textColor="@color/text_color"
             android:textSize="@dimen/font_18sp"
+            android:textStyle="bold"
             tools:text="Hey" />
 
         <TextView
@@ -40,6 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDialogContent"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_16dp"
             android:gravity="center"
             android:orientation="horizontal">
 

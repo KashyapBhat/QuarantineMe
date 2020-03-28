@@ -2,58 +2,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent">
+    android:background="@drawable/round_corner_rectangle">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/ivCross"
+        android:layout_width="@dimen/_30dp"
+        android:layout_height="@dimen/_30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:padding="@dimen/_5dp"
+        android:src="@drawable/cross"
+        android:tint="@color/black" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/tvSuccess"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10dp"
+        android:padding="@dimen/_5dp"
+        android:src="@drawable/ic_success" />
+
+
+    <TextView
+        android:id="@+id/tvSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Great"
+        android:textSize="@dimen/font_30sp" />
+
+    <TextView
+        android:id="@+id/tvSuccessDesc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_40dp"
-        android:background="@drawable/round_corner_rectangle">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSuccess"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:gravity="center"
+        android:text="You have successfully completed your on-boarding process."
+        android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/ivCross"
-            android:layout_width="@dimen/_30dp"
-            android:layout_height="@dimen/_30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:padding="@dimen/_5dp"
-            android:src="@drawable/cross"
-            android:tint="@color/black" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_above="@+id/tvSuccess"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_10dp"
-            android:padding="@dimen/_5dp"
-            android:src="@drawable/ic_success" />
-
-
-        <TextView
-            android:id="@+id/tvSuccess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Success"
-            android:textSize="@dimen/font_30sp" />
-
-        <TextView
-            android:id="@+id/tvSuccessDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSuccess"
-            android:gravity="center"
-            android:text="We have successfully completed your on-boarding process." />
-
-        <Button
-            android:id="@+id/btSuccess"
-            style="@style/Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Next" />
-    </RelativeLayout>
+    <Button
+        android:id="@+id/btSuccess"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Next" />
 
 </RelativeLayout>

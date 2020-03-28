@@ -10,6 +10,7 @@
         android:id="@+id/rlMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginEnd="@dimen/_16dp">
 
@@ -21,8 +22,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/_16dp"
+            android:background="@color/white"
             android:padding="@dimen/_5dp"
-            android:text="Stop watch to upload image"
+            android:text="Please submit before stop watch ends."
             android:textColor="@color/black"
             android:textSize="@dimen/font_16sp" />
 
@@ -41,7 +43,6 @@
             android:id="@+id/llAdd"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-
             android:layout_below="@+id/tvStopwatchValue"
             android:orientation="horizontal">
 
@@ -52,7 +53,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_16dp"
                 android:layout_weight="0.5"
-                android:text="Photo Upload" />
+                android:background="@color/white"
+                android:text="Photo Upload"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/btIssue"
@@ -60,10 +63,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:text="Add issues" />
+                android:background="@color/white"
+                android:text="Add issues"
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/rlTemp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llAdd"
@@ -83,9 +89,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20dp"
-                android:hint="In Celsius"
+                android:hint="In &#xb0;F (Fahrenheit)"
                 android:inputType="number" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btSubmit"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlTemp"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/_20dp"
+            android:text="Submit" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -96,19 +113,115 @@
         android:layout_marginTop="@dimen/_30dp"
         android:padding="@dimen/_16dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRealTimeData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvActive"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/_5dp"
+            android:elevation="4dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvActive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/_5dp"
+                    android:paddingBottom="@dimen/_5dp"
+                    android:text="Active\nCases"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvActiveValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="819"
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvCured"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/_5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvCured"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/_5dp"
+                    android:paddingBottom="@dimen/_5dp"
+                    android:text="Cured\nCases"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvCuredValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="79"
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDeath"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDeath"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/_5dp"
+                    android:paddingBottom="@dimen/_5dp"
+                    android:text="Death\nCases"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvDeathValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="19"
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlEmergency"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="@dimen/_16dp">
 
         <Button
             android:id="@+id/btEmergency"

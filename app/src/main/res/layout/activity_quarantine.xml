@@ -29,7 +29,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/darkestPrimaryColor"
             android:paddingTop="3dp"
             android:paddingBottom="5dp"
             android:visibility="visible"
@@ -41,7 +41,6 @@
             app:menu="@menu/qmmenu" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

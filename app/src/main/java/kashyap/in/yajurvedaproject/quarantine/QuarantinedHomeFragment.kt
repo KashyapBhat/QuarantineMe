@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.util.SparseArray
 import android.view.LayoutInflater
@@ -13,9 +14,11 @@ import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.face.Face
 import com.google.android.gms.vision.face.FaceDetector
 import kashyap.`in`.yajurvedaproject.R
-import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
+import kashyap.`in`.yajurvedaproject.common.COUNT_DOWN_START_TIME
+import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_quarantined_home.*
+
 
 class QuarantinedHomeFragment : BaseFragment() {
     private var url: String = ""
@@ -46,7 +49,42 @@ class QuarantinedHomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btPhoto.setOnClickListener { takeImage() }
+        btPhoto?.setOnClickListener { takeImage() }
+        var countDownStartTime: Long = 0
+        val xMins: Long = 10 * 60 * 1000
+        val currentTime: Long = System.currentTimeMillis();
+
+        if (!PrefUtils.hasKey(getActivity(), COUNT_DOWN_START_TIME)) {
+            countDownStartTime = currentTime
+            PrefUtils.saveToPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime)
+        } else {
+            countDownStartTime =
+                PrefUtils.getFromPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime) as Long
+        }
+
+        val timeRemaining = currentTime - countDownStartTime
+        if (timeRemaining > xMins) {
+            onTimeFinish()
+        } else {
+            object : CountDownTimer(xMins - timeRemaining, 1000) {
+
+                override fun onFinish() {
+                    onTimeFinish()
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+                    val sec: Int = (millisUntilFinished / 1000).toInt()
+                    val min: Int = (sec / 60)
+                    val secRem: Int = (sec % 60)
+                    tvStopwatchValue?.text = min.toString().plus(":").plus(secRem.toString())
+                }
+            }.start()
+        }
+    }
+
+    private fun onTimeFinish() {
+        tvStopwatchValue?.text = 0.toString().plus(":").plus(0.toString())
+
     }
 
     private fun takeImage() {
@@ -86,16 +124,27 @@ class QuarantinedHomeFragment : BaseFragment() {
                 "Retry",
                 Runnable { takeImage() }
             )
-            faces.size() == 1 -> showSnackBar(
-                "Face Detected",
-                "Great",
-                null
-            )
+            faces.size() == 1 -> {
+                showSnackBar(
+                    "Face Detected",
+                    "Great",
+                    null
+                )
+                handleImageUpload(bitmap)
+            }
             faces.size() > 1 -> showSnackBar(
                 "More than one face detected",
                 "Retry",
                 Runnable { takeImage() }
             )
+        }
+    }
+
+    private fun handleImageUpload(bitmap: Bitmap) {
+        btPhoto?.text = "Image Added"
+        // TODO: Store the bitmap into image
+        btSubmit?.setOnClickListener {
+
         }
     }
 }

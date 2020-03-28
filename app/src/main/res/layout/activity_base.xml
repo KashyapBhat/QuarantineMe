@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40dp"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary">
+        android:background="@color/darkestPrimaryColor">
 
         <TextView
             android:id="@+id/toolbarText"
@@ -20,7 +20,7 @@
             android:gravity="center_vertical"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
-            android:text="ಸಂಧ್ಯಾವಂದನೆ"
+            android:text="Quarantine Me"
             android:textColor="@color/white"
             android:textSize="@dimen/font_20sp" />
     </RelativeLayout>
