@@ -25,11 +25,13 @@ import android.media.RingtoneManager
 import androidx.core.content.ContextCompat.getSystemService
 import android.app.NotificationManager
 import android.view.LayoutInflater
+import android.view.Window
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
+import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.nonquarantine.NonQuarantineActivity
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 
@@ -178,7 +180,8 @@ class GeneralUtils {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.CAMERA
             )
         }
 
@@ -246,6 +249,23 @@ class GeneralUtils {
                 context.startActivity(Intent(context, NonQuarantineActivity::class.java))
             }
             context.finish()
+        }
+
+        fun showSnackBar(title: String, window: Window, actionText: String, runnable: Runnable?) {
+            var customSnackbar: CustomSnackbar? = null
+            if (customSnackbar == null) {
+                customSnackbar = CustomSnackbar.make(
+                    window.decorView.findViewById(android.R.id.content),
+                    CustomSnackbar.LENGTH_INDEFINITE
+                )
+            }
+            customSnackbar?.setText(title)
+            customSnackbar?.setAction(actionText) {
+                runnable?.run()
+            }
+            if (customSnackbar?.isShownOrQueued == false) {
+                customSnackbar?.show()
+            }
         }
     }
 }

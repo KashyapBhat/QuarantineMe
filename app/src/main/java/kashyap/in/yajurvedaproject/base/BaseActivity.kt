@@ -30,7 +30,6 @@ import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.common.DEFAULT_MIN_APP_VERSION
 import kashyap.`in`.yajurvedaproject.common.FS_MIN_APP_VERSION_KEY
 import kashyap.`in`.yajurvedaproject.common.INTENT_CONNECTIVITY_CHANGE
-import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.receivers.NetworkReceiver
 import kashyap.`in`.yajurvedaproject.utils.*
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.updateUppFromPlaystore
@@ -48,7 +47,6 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     private lateinit var networkReceiver: NetworkReceiver
     protected lateinit var context: Context
     protected var locationFetcher: LocationUtils? = null
-    private var customSnackbar: CustomSnackbar? = null
     private var onActivityResultListener: OnActivityResultListener? = null
 
     override fun setContentView(layoutResID: Int) {
@@ -159,19 +157,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     }
 
     fun showSnackBar(title: String, actionText: String, runnable: Runnable?) {
-        if (customSnackbar == null) {
-            customSnackbar = CustomSnackbar.make(
-                window.decorView.findViewById(android.R.id.content),
-                CustomSnackbar.LENGTH_INDEFINITE
-            )
-        }
-        customSnackbar?.setText(title)
-        customSnackbar?.setAction(actionText) {
-            runnable?.run()
-        }
-        if (customSnackbar?.isShownOrQueued == false) {
-            customSnackbar?.show()
-        }
+        GeneralUtils.showSnackBar(title, window, actionText, runnable)
     }
 
     fun checkPermissionsAndRun() {

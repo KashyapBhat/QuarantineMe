@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingTop="@dimen/_30dp">
+
+
+    <RelativeLayout
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp">
+
+        <TextView
+            android:id="@+id/tvStopwatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:padding="@dimen/_5dp"
+            android:text="Stop watch to upload image"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_16sp" />
+
+        <TextView
+            android:id="@+id/tvStopwatchValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStopwatch"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_5dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:text="00:00:00"
+            android:textSize="@dimen/font_20sp" />
+
+        <LinearLayout
+            android:id="@+id/llAdd"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+
+            android:layout_below="@+id/tvStopwatchValue"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btPhoto"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_weight="0.5"
+                android:text="Photo Upload" />
+
+            <Button
+                android:id="@+id/btIssue"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="Add issues" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llAdd"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16dp"
+                android:padding="@dimen/_5dp"
+                android:text="Body Temperature"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/etTempValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20dp"
+                android:hint="In Celsius"
+                android:inputType="number" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rlEmergency"
+        android:layout_below="@+id/rlMain"
+        android:layout_marginTop="@dimen/_30dp"
+        android:padding="@dimen/_16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRealTimeData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlEmergency"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp">
+
+        <Button
+            android:id="@+id/btEmergency"
+            style="@style/Button"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@color/red"
+            android:text="Emergency"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

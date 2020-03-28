@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.transact
 
 
@@ -40,7 +41,7 @@ abstract class BaseFragment : Fragment() {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener && activity == null && context is Activity) {
             listener = context
-            activity = context as Activity
+            activity = getActivity() as Activity
         } else {
             Log.d("Exception: ", "$context must implement OnFragmentInteractionListener")
         }
@@ -64,6 +65,10 @@ abstract class BaseFragment : Fragment() {
     fun hideProgress() {
         if (activity != null && activity is BaseActivity)
             (activity as BaseActivity).hideProgress()
+    }
+
+    fun showSnackBar(title: String, actionText: String, runnable: Runnable?) {
+        getActivity()?.window?.let { GeneralUtils.showSnackBar(title, it, actionText, runnable) }
     }
 
     fun addFragment(activity: BaseActivity, baseFragment: BaseFragment?, @IdRes containerId: Int) {

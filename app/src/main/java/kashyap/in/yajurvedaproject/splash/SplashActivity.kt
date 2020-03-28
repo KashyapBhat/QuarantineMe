@@ -32,7 +32,7 @@ class SplashActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            PrefUtils.hasKey(this, IS_QUARANTINED)
+            PrefUtils.getFromPrefs(context, IS_QUARANTINED, false) as Boolean
         ) {
             biometrics()
         } else {
