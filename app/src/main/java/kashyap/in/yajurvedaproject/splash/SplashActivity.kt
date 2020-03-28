@@ -73,7 +73,7 @@ class SplashActivity : BaseActivity() {
         if (promptInfo == null)
             promptInfo = PromptInfo.Builder()
                 .setTitle("Biometric")
-                .setSubtitle("Please use our fingerprint / face recognition")
+                .setSubtitle("Please use your fingerprint / face recognition")
                 .setDescription("")
                 .setNegativeButtonText("Cancel")
                 .build()
