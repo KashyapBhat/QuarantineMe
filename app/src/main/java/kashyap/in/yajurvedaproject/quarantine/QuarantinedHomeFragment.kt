@@ -3,20 +3,27 @@ package kashyap.`in`.yajurvedaproject.quarantine
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.MediaStore
+import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProvider
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.face.Face
 import com.google.android.gms.vision.face.FaceDetector
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.COUNT_DOWN_START_TIME
-import kashyap.`in`.yajurvedaproject.common.OPEN_URL
 import kashyap.`in`.yajurvedaproject.common.QUARANTINE_DATA
 import kashyap.`in`.yajurvedaproject.models.Quarantine
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
@@ -26,6 +33,7 @@ class QuarantinedHomeFragment : BaseFragment() {
 
     private val CAMERA_REQUEST = 1888
     private var quarantine: Quarantine? = null
+    private var bannerAdapter: BannerAdapter? = null
 
     companion object {
         @JvmStatic
@@ -55,6 +63,71 @@ class QuarantinedHomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btPhoto?.setOnClickListener { takeImage() }
+        handleBanner()
+        handleStopWatch()
+        handleEmergencyButton()
+    }
+
+    private fun handleBanner() {
+        rvBanner?.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        bannerAdapter = BannerAdapter(getImages(), context)
+        rvBanner?.adapter = bannerAdapter
+        bannerAdapter?.notifyDataSetChanged()
+        val linearSnapHelper = SnapHelperOneByOne()
+        linearSnapHelper.attachToRecyclerView(rvBanner)
+        var i = 0
+        object : CountDownTimer(100000, 5000) {
+
+            override fun onFinish() {
+
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                if (i == getImages()?.size) {
+                    i = 0
+                }
+                rvBanner?.smoothScrollToPosition(i++)
+            }
+        }.start()
+    }
+
+    private fun getImages(): List<String>? {
+        val storage: FirebaseStorage = FirebaseStorage.getInstance()
+        val pdfRef: StorageReference = storage.reference.child("banner")
+        pdfRef.listAll()
+            .addOnSuccessListener {
+                Log.d("Firebase: ", "Url created $it")
+            }.addOnFailureListener {
+                Log.d("", it.toString())
+            }
+        return listOf(
+            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F1.png?alt=media&token=f8d8ee48-f0e0-4dac-aa9f-bdad983e6fa1",
+            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F2.png?alt=media&token=c84b46e0-74e2-4d58-bac1-5ab098fbdca7",
+            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F3.png?alt=media&token=79829f1e-0221-4561-b256-d78c59afce0f",
+            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F4.png?alt=media&token=e702ee6b-01d9-474a-b82b-593dbfc3668f",
+            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F5.png?alt=media&token=331c519c-b878-4cda-96bb-2ea3a5b4c966"
+        )
+    }
+
+    class SnapHelperOneByOne : LinearSnapHelper() {
+        override fun findTargetSnapPosition(
+            layoutManager: RecyclerView.LayoutManager,
+            velocityX: Int,
+            velocityY: Int
+        ): Int {
+            if (layoutManager !is ScrollVectorProvider) {
+                return RecyclerView.NO_POSITION
+            }
+            val currentView = findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
+            val currentPosition = layoutManager.getPosition(currentView)
+            return if (currentPosition == RecyclerView.NO_POSITION) {
+                RecyclerView.NO_POSITION
+            } else currentPosition
+        }
+    }
+
+    private fun handleStopWatch() {
         // TODO: Save to firebase
         // Handle timings
         var countDownStartTime: Long = 0
@@ -155,4 +228,21 @@ class QuarantinedHomeFragment : BaseFragment() {
 
         }
     }
+
+    private fun handleEmergencyButton() {
+        btEmergency?.setOnClickListener {
+            val phNumber = quarantine?.emergencyNumber ?: "9483214259"
+            val uri = Uri.parse("tel:".plus(phNumber.trim()).trim())
+            try {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = uri
+                startActivity(callIntent)
+            } catch (exception: Exception) {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = uri
+                startActivity(callIntent)
+            }
+        }
+    }
+
 }
