@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import kashyap.in.yajurvedaproject.R;
+import kashyap.in.yajurvedaproject.models.Information;
 
 public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> {
 

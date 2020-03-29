@@ -6,6 +6,7 @@ package kashyap.`in`.yajurvedaproject.common
 //Intent
 const val INTENT_CONNECTIVITY_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE"
 const val OPEN_URL = "URL"
+const val QUARANTINE_DATA = "QuarantineData"
 
 
 //FireStore

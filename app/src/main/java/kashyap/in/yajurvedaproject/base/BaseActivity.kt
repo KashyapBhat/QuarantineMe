@@ -2,7 +2,6 @@ package kashyap.`in`.yajurvedaproject.base
 
 import android.Manifest
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -15,21 +14,25 @@ import android.location.Location
 import android.os.ParcelFileDescriptor
 import android.preference.PreferenceManager
 import android.preference.PreferenceManager.OnActivityResultListener
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewStub
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
 import kashyap.`in`.yajurvedaproject.BuildConfig
-import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.common.DEFAULT_MIN_APP_VERSION
 import kashyap.`in`.yajurvedaproject.common.FS_MIN_APP_VERSION_KEY
 import kashyap.`in`.yajurvedaproject.common.INTENT_CONNECTIVITY_CHANGE
+import kashyap.`in`.yajurvedaproject.models.Quarantine
 import kashyap.`in`.yajurvedaproject.receivers.NetworkReceiver
 import kashyap.`in`.yajurvedaproject.utils.*
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.updateUppFromPlaystore
@@ -46,7 +49,8 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     private lateinit var baseLayout: RelativeLayout
     private lateinit var networkReceiver: NetworkReceiver
     protected lateinit var context: Context
-    protected var locationFetcher: LocationUtils? = null
+    protected var quarantine: Quarantine? = null
+    private var locationFetcher: LocationUtils? = null
     private var onActivityResultListener: OnActivityResultListener? = null
 
     override fun setContentView(layoutResID: Int) {
@@ -69,6 +73,29 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     fun initView() {
         hideProgress()
         locationFetcher = LocationUtils(this, this)
+        getQuarantineDataFromFb()
+    }
+
+    private fun getQuarantineDataFromFb() {
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("quarantine")
+        myRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value: HashMap<*, *>? = dataSnapshot.value as HashMap<*, *>?
+                quarantine = getJsonFromHashmap(value)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("", "Failed to read value.", error.toException())
+            }
+        })
+    }
+
+    private fun getJsonFromHashmap(value: HashMap<*, *>?): Quarantine {
+        val gson = Gson()
+        val jsonElement = gson.toJsonTree(value)
+        return gson.fromJson(jsonElement, Quarantine::class.java)
     }
 
     override fun showProgress() {

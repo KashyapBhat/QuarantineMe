@@ -16,18 +16,23 @@ import com.google.android.gms.vision.face.FaceDetector
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.COUNT_DOWN_START_TIME
+import kashyap.`in`.yajurvedaproject.common.OPEN_URL
+import kashyap.`in`.yajurvedaproject.common.QUARANTINE_DATA
+import kashyap.`in`.yajurvedaproject.models.Quarantine
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_quarantined_home.*
 
 class QuarantinedHomeFragment : BaseFragment() {
 
     private val CAMERA_REQUEST = 1888
+    private var quarantine: Quarantine? = null
 
     companion object {
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(quarantine: Quarantine?) =
             QuarantinedHomeFragment().apply {
                 arguments = Bundle().apply {
+                    putParcelable(QUARANTINE_DATA, quarantine)
                 }
             }
     }
@@ -43,14 +48,17 @@ class QuarantinedHomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            quarantine = it.getParcelable(QUARANTINE_DATA)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btPhoto?.setOnClickListener { takeImage() }
+        // TODO: Save to firebase
+        // Handle timings
         var countDownStartTime: Long = 0
-        val xMins: Long = 10 * 60 * 1000
+        val xMins: Long = quarantine?.xMins ?: 15
         val currentTime: Long = System.currentTimeMillis();
 
         if (!PrefUtils.hasKey(getActivity(), COUNT_DOWN_START_TIME)) {
@@ -142,6 +150,7 @@ class QuarantinedHomeFragment : BaseFragment() {
     private fun handleImageUpload(bitmap: Bitmap) {
         btPhoto?.text = "Image Added"
         // TODO: Store the bitmap into image
+        // TODO: Save to firebase
         btSubmit?.setOnClickListener {
 
         }

@@ -68,13 +68,19 @@ class SeparationActivity : BaseActivity() {
         ).show()
         Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
         saveUserDataToPrefs(location)
-        handleNextScreen()
     }
 
     private fun saveUserDataToPrefs(location: Location?) {
         PrefUtils.saveToPrefs(context, IS_QUARANTINED, isQuarantined)
         PrefUtils.saveToPrefs(context, LATITUDE, location?.latitude)
         PrefUtils.saveToPrefs(context, LONGITUDE, location?.longitude)
+        saveToFirebase()
+        handleNextScreen()
+    }
+
+    private fun saveToFirebase() {
+        // TODO: Save to firebase
+        // save locations and everything
     }
 
     private fun handleNextScreen() {

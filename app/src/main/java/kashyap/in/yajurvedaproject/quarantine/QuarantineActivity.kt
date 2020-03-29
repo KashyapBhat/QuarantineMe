@@ -30,7 +30,9 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
 
     override fun onLocationResult(location: Location?) {
         hideProgress()
-        replaceFragment(this, QuarantinedHomeFragment.newInstance(), R.id.flContainer)
+        replaceFragment(this, QuarantinedHomeFragment.newInstance(quarantine), R.id.flContainer)
+        // TODO: Save to firebase
+        // Check with the older
         Toast.makeText(
             this,
             "Location ::::" + " Lat: " + location?.latitude + " Long: " + location?.longitude,
@@ -42,15 +44,15 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.qmmi1 -> {
-                replaceFragment(this, QuarantinedHomeFragment.newInstance(), R.id.flContainer)
+                replaceFragment(this, QuarantinedHomeFragment.newInstance(quarantine), R.id.flContainer)
                 return true
             }
             R.id.qmmi2 -> {
-                replaceFragment(this, InfoFragment.newInstance(), R.id.flContainer)
+                replaceFragment(this, InfoFragment.newInstance(quarantine), R.id.flContainer)
                 return true
             }
             R.id.qmmi3 -> {
-                replaceFragment(this, NotificationFragment.newInstance(), R.id.flContainer)
+                replaceFragment(this, NotificationFragment.newInstance(quarantine), R.id.flContainer)
                 return true
             }
             R.id.qmmi4 -> {

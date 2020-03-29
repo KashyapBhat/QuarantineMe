@@ -1,0 +1,30 @@
+{
+  "activeCase":"",
+  "curedCase":"",
+  "deathCase":"",
+  "xMins":1,
+  "Information":[
+    {
+      "header": "",
+      "desc": "",
+      "imageUrl": "",
+      "linkUrl": ""
+    },
+    {
+      "header": "",
+      "desc": "",
+      "imageUrl": "",
+      "linkUrl": ""
+    }
+  ],
+  "Notication":[
+    {
+      "header": "",
+      "desc": ""
+    },
+    {
+      "header": "",
+      "desc": ""
+    }
+  ]
+}
