@@ -3,113 +3,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingTop="@dimen/_30dp">
+    android:paddingTop="@dimen/_20dp">
 
 
-    <RelativeLayout
-        android:id="@+id/rlMain"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="@dimen/_16dp"
-        android:layout_marginEnd="@dimen/_16dp">
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:elevation="@dimen/_5dp">
 
-        <TextView
-            android:id="@+id/tvStopwatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_16dp"
-            android:background="@color/white"
-            android:padding="@dimen/_5dp"
-            android:text="Please submit before stop watch ends."
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_16sp" />
-
-        <TextView
-            android:id="@+id/tvStopwatchValue"
+        <RelativeLayout
+            android:id="@+id/rlMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvStopwatch"
-            android:layout_marginStart="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_5dp"
-            android:layout_marginEnd="@dimen/_16dp"
-            android:text="00:00:00"
-            android:textSize="@dimen/font_20sp" />
-
-        <LinearLayout
-            android:id="@+id/llAdd"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@+id/tvStopwatchValue"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btPhoto"
-                style="@style/Button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_16dp"
-                android:layout_weight="0.5"
-                android:background="@color/white"
-                android:text="Photo Upload"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/btIssue"
-                style="@style/Button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:background="@color/white"
-                android:text="Add issues"
-                android:textColor="@color/black" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/rlTemp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llAdd"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvTemp"
+                android:id="@+id/tvStopwatch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:background="@color/white"
                 android:padding="@dimen/_5dp"
-                android:text="Body Temperature"
-                android:textColor="@color/black" />
+                android:text="Please submit before stop watch ends."
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16sp" />
 
-            <EditText
-                android:id="@+id/etTempValue"
+            <TextView
+                android:id="@+id/tvStopwatchValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20dp"
-                android:hint="In &#xb0;F (Fahrenheit)"
-                android:inputType="number" />
-        </LinearLayout>
+                android:layout_below="@+id/tvStopwatch"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_5dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:text="00:00:00"
+                android:textSize="@dimen/font_20sp" />
 
-        <Button
-            android:id="@+id/btSubmit"
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlTemp"
-            android:layout_alignParentBottom="false"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/_20dp"
-            android:text="Submit" />
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/llAdd"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tvStopwatchValue"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btPhoto"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/white"
+                    android:text="Photo Upload"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/btIssue"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="@color/white"
+                    android:text="Add issues"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rlTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llAdd"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16dp"
+                    android:padding="@dimen/_5dp"
+                    android:text="Body Temperature"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etTempValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginEnd="@dimen/_16dp"
+                    android:hint="In &#xb0;F (Fahrenheit)"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btSubmit"
+                style="@style/ButtonHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlTemp"
+                android:layout_margin="@dimen/_20dp"
+                android:text="Submit" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rlEmergency"
-        android:layout_below="@+id/rlMain"
+        android:layout_below="@+id/cvMain"
         android:layout_marginTop="@dimen/_30dp"
         android:padding="@dimen/_16dp">
 
@@ -129,12 +137,13 @@
                     android:id="@+id/tvActive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/grey"
+                    android:background="@color/darkestPrimaryColor"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/_5dp"
                     android:paddingBottom="@dimen/_5dp"
                     android:text="Active\nCases"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvActiveValue"
@@ -163,12 +172,13 @@
                     android:id="@+id/tvCured"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/grey"
+                    android:background="@color/darkestPrimaryColor"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/_5dp"
                     android:paddingBottom="@dimen/_5dp"
                     android:text="Cured\nCases"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvCuredValue"
@@ -197,12 +207,13 @@
                     android:id="@+id/tvDeath"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/grey"
+                    android:background="@color/darkestPrimaryColor"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/_5dp"
                     android:paddingBottom="@dimen/_5dp"
                     android:text="Death\nCases"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvDeathValue"
