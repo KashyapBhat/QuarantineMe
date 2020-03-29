@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5dp"
+    android:elevation="5dp"
+    android:minHeight="160dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:gravity="center"
+        android:padding="@dimen/_5dp">
+
+        <ImageView
+            android:id="@+id/ivInfoImage"
+            android:layout_width="110dp"
+            android:layout_height="160dp"
+            android:padding="@dimen/_5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/ivInfoImage"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvInfoHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:text="A person who"
+                android:textColor="#222222"
+                android:textSize="@dimen/font_17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvInfoDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingTop="@dimen/_5dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_10dp"
+                android:text="Initially, we ass hold), we then send a notification to the handler so that they don’t go out and hamnds,"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
+import kashyap.`in`.yajurvedaproject.info.InfoFragment
 import kashyap.`in`.yajurvedaproject.notifications.NotificationFragment
 import kotlinx.android.synthetic.main.activity_quarantine.*
 
@@ -45,7 +46,7 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
                 return true
             }
             R.id.qmmi2 -> {
-
+                replaceFragment(this, InfoFragment.newInstance(), R.id.flContainer)
                 return true
             }
             R.id.qmmi3 -> {
