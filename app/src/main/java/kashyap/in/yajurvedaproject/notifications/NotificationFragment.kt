@@ -45,64 +45,11 @@ class NotificationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvNotification?.layoutManager = LinearLayoutManager(getActivity())
-        mAdapter = NotificationAdapter(quarantine?.notificationList)
+        mAdapter = NotificationAdapter(quarantine?.notificationList ?: emptyList())
         rvNotification?.adapter = mAdapter
         mAdapter?.notifyDataSetChanged()
         // TODO: Save to firebase
         // Get notifications data
-    }
-
-    private fun getNotificationAdapter(): List<Notification?>? {
-        return listOf(
-            Notification(
-                "Identification and isolation of persons with infection. ",
-                "House to house survey around 3 kms radius of house of primary positive case for identification of any symptoms / travel history / known contact history for COVID 19. "
-            ),
-            Notification(
-                "Identification of high-risk contacts for quarantine. ",
-                "All the symptomatic individuals to be screened by physician and if required the sample will be collected from their home or in the designated centre. "
-            ),
-            Notification(
-                "Sanitization of quarantine places for identified positive cases",
-                "Patients will be sent to the designated centre by ambulance or designated vehicle.. "
-            ),
-            Notification(
-                "Ensurement of surveillance for societies with RWA. ",
-                "Team will look out for local health care facilities of the area (Private clinic, Moholla clinic etc) "
-            ),
-            Notification(
-                "Identification and isolation of persons with infection. ",
-                "House to house survey around 3 kms radius of house of primary positive case for identification of any symptoms / travel history / known contact history for COVID 19. "
-            ),
-            Notification(
-                "Identification of high-risk contacts for quarantine. ",
-                "All the symptomatic individuals to be screened by physician and if required the sample will be collected from their home or in the designated centre. "
-            ),
-            Notification(
-                "Sanitization of quarantine places for identified positive cases",
-                "Patients will be sent to the designated centre by ambulance or designated vehicle.. "
-            ),
-            Notification(
-                "Ensurement of surveillance for societies with RWA. ",
-                "Team will look out for local health care facilities of the area (Private clinic, Moholla clinic etc) "
-            ),
-            Notification(
-                "Identification and isolation of persons with infection. ",
-                "House to house survey around 3 kms radius of house of primary positive case for identification of any symptoms / travel history / known contact history for COVID 19. "
-            ),
-            Notification(
-                "Identification of high-risk contacts for quarantine. ",
-                "All the symptomatic individuals to be screened by physician and if required the sample will be collected from their home or in the designated centre. "
-            ),
-            Notification(
-                "Sanitization of quarantine places for identified positive cases",
-                "Patients will be sent to the designated centre by ambulance or designated vehicle.. "
-            ),
-            Notification(
-                "Ensurement of surveillance for societies with RWA. ",
-                "Team will look out for local health care facilities of the area (Private clinic, Moholla clinic etc) "
-            )
-        )
     }
 
 }

@@ -7,6 +7,7 @@ package kashyap.`in`.yajurvedaproject.common
 const val INTENT_CONNECTIVITY_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE"
 const val OPEN_URL = "URL"
 const val QUARANTINE_DATA = "QuarantineData"
+const val WEBVIEW_URL = "WebviewURL"
 
 
 //FireStore
@@ -50,3 +51,8 @@ const val MENU_ONE: Int = kashyap.`in`.yajurvedaproject.R.id.navOne
 const val MENU_TWO: Int = kashyap.`in`.yajurvedaproject.R.id.navTwo
 const val MENU_THREE: Int = kashyap.`in`.yajurvedaproject.R.id.navThree
 const val MENU_FOUR: Int = kashyap.`in`.yajurvedaproject.R.id.navFour
+
+//Interactions helper
+
+const val WEBVIEW_FRAGMENT = 1
+const val INFO_FRAGMENT = 2

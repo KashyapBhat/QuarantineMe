@@ -21,6 +21,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
 
     private List<Information> informationList;
     private Context context;
+    private InfoItemClickIntf infoItemClickIntf;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvInfoHeader, tvInfoDesc;
@@ -34,9 +35,10 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
         }
     }
 
-    public InfoAdapter(List<Information> informationList, Context context) {
+    public InfoAdapter(List<Information> informationList, Context context, InfoItemClickIntf infoItemClickIntf) {
         this.informationList = informationList;
         this.context = context;
+        this.infoItemClickIntf = infoItemClickIntf;
     }
 
     @Override
@@ -49,8 +51,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(InfoAdapter.MyViewHolder holder, int position) {
         Information information = informationList.get(position);
-        holder.itemView.setOnClickListener(v ->
-                Toast.makeText(context, "ItemClicked: " + position, Toast.LENGTH_SHORT).show());
+        holder.itemView.setOnClickListener(v -> infoItemClickIntf.onItemClick(information));
         Glide.with(context)
                 .load(information.getImageUrl())
                 .placeholder(R.drawable.splash)
@@ -63,5 +64,9 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
     @Override
     public int getItemCount() {
         return informationList.size();
+    }
+
+    interface InfoItemClickIntf {
+        void onItemClick(Information information);
     }
 }
