@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     android:background="@color/white">
 
     <RelativeLayout
@@ -14,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:overScrollMode="ifContentScrolls" />
+            android:overScrollMode="never" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvMain"
@@ -42,6 +43,7 @@
                     android:layout_marginEnd="@dimen/_16dp"
                     android:background="@color/white"
                     android:padding="@dimen/_5dp"
+                    android:textStyle="bold"
                     android:text="Please submit before stop watch ends."
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_16sp" />
@@ -51,16 +53,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvStopwatch"
-                    android:layout_marginStart="@dimen/_16dp"
-                    android:layout_marginTop="@dimen/_5dp"
+                    android:layout_marginStart="@dimen/_10dp"
                     android:layout_marginEnd="@dimen/_16dp"
+                    android:padding="@dimen/_5dp"
                     android:text="00:00:00"
                     android:textSize="@dimen/font_20sp" />
 
                 <LinearLayout
                     android:id="@+id/llAdd"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:layout_below="@+id/tvStopwatchValue"
                     android:orientation="horizontal">
 
@@ -69,7 +71,7 @@
                         style="@style/Button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_16dp"
+                        android:layout_margin="@dimen/_16dp"
                         android:layout_weight="0.5"
                         android:background="@color/white"
                         android:text="Photo Upload"
@@ -80,6 +82,7 @@
                         style="@style/Button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_16dp"
                         android:layout_weight="0.5"
                         android:background="@color/white"
                         android:text="Add issues"
@@ -97,16 +100,17 @@
                         android:id="@+id/tvTemp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_16dp"
-                        android:padding="@dimen/_5dp"
                         android:text="Body Temperature"
+                        android:textSize="@dimen/font_16sp"
                         android:textColor="@color/black" />
 
                     <EditText
                         android:id="@+id/etTempValue"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="@dimen/_10dp"
                         android:layout_marginEnd="@dimen/_16dp"
                         android:hint="In &#xb0;F (Fahrenheit)"
                         android:inputType="number" />
@@ -118,7 +122,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlTemp"
-                    android:layout_margin="@dimen/_20dp"
                     android:text="Submit" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

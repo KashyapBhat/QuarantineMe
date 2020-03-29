@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -15,11 +15,11 @@
         android:layout_marginTop="21dp"
         android:layout_marginEnd="144dp"
         android:layout_marginBottom="686dp"
-        android:textColor="#fff"
         android:background="#107FE1"
         android:paddingLeft="70dp"
         android:paddingTop="2dp"
-        android:text="Stopwatch" />
+        android:text="Stopwatch"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/hftv2"
@@ -44,7 +44,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="115dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginBottom="366dp" >
+        android:layout_marginBottom="366dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/hfb1"
@@ -53,26 +53,26 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:textColor="#fff"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="28dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="203dp"
             android:layout_marginBottom="132dp"
             android:background="#107FE1"
-            android:text="Photo Upload" />
+            android:text="Photo Upload"
+            android:textColor="#fff" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/hfb2"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
-            android:textColor="#fff"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="28dp"
             android:background="#107FE1"
-            android:text="click here to add issues" />
+            android:text="click here to add issues"
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/hftv3"
@@ -84,13 +84,13 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="28dp"
             android:layout_marginTop="169dp"
-            android:textColor="#fff"
-            android:background="#107FE1"
             android:layout_marginEnd="203dp"
+            android:layout_marginBottom="46dp"
+            android:background="#107FE1"
             android:paddingLeft="30dp"
             android:paddingTop="7dp"
-            android:layout_marginBottom="46dp"
-            android:text="Temperature" />
+            android:text="Temperature"
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/hftv4"
@@ -116,28 +116,29 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hfrcv1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/hfb3"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:textColor="#fff"-->
-<!--            android:background="#107FE1"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginStart="34dp"-->
-<!--            android:layout_marginTop="52dp" />-->
+            android:layout_height="wrap_content"
+            android:overScrollMode="never" />
+        <!--        <com.google.android.material.button.MaterialButton-->
+        <!--            android:id="@+id/hfb3"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:textColor="#fff"-->
+        <!--            android:background="#107FE1"-->
+        <!--            android:layout_alignParentStart="true"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:layout_marginStart="34dp"-->
+        <!--            android:layout_marginTop="52dp" />-->
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/hfb4"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:background="#107FE1"-->
-<!--            android:textColor="#fff"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="52dp"-->
-<!--            android:layout_marginEnd="34dp" />-->
+        <!--        <com.google.android.material.button.MaterialButton-->
+        <!--            android:id="@+id/hfb4"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:background="#107FE1"-->
+        <!--            android:textColor="#fff"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="52dp"-->
+        <!--            android:layout_marginEnd="34dp" />-->
 
     </RelativeLayout>
 
@@ -147,8 +148,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="18dp"
-        android:layout_marginBottom="63dp"
-        >
+        android:layout_marginBottom="63dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/hfb5"
@@ -158,9 +158,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="86dp"
             android:layout_marginBottom="23dp"
+            android:background="#DD2505"
             android:text="Emergency"
-            android:textColor="#fff"
-            android:background="#DD2505"/>
+            android:textColor="#fff" />
 
     </RelativeLayout>
 
