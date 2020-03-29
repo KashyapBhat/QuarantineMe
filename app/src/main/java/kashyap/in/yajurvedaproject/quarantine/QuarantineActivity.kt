@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
+import kashyap.`in`.yajurvedaproject.notifications.NotificationFragment
 import kotlinx.android.synthetic.main.activity_quarantine.*
 
 class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -48,7 +49,7 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
                 return true
             }
             R.id.qmmi3 -> {
-
+                replaceFragment(this, NotificationFragment.newInstance(), R.id.flContainer)
                 return true
             }
             R.id.qmmi4 -> {

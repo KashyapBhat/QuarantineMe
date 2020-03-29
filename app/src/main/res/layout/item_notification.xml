@@ -23,6 +23,7 @@
             android:id="@+id/tvNotificationHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5dp"
             android:layout_toStartOf="@+id/ivNotification"
             android:padding="@dimen/_5dp"
             android:text="A person who is in quarantine."
@@ -35,9 +36,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvNotificationHeader"
-            android:layout_marginStart="@dimen/_10dp"
-            android:padding="@dimen/_5dp"
+            android:layout_marginStart="@dimen/_5dp"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:paddingStart="@dimen/_5dp"
+            android:paddingEnd="@dimen/_5dp"
+            android:paddingBottom="@dimen/_5dp"
             android:text="Initially, we ask the user to have his/her phone with them always so that they can mark their home location at first. Then, we will store it with us. After every x minutes, we check the location coordinates and match the distance. If they are not in the same location (we will keep a few meters threshold), we then send a notification to the handler so that they don’t go out and hamnds,"
             android:textColor="@color/black" />
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>
