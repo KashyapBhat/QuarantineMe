@@ -218,12 +218,12 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
             }
     }
 
-    private fun showToolbar() {
+    fun showToolbar() {
         toolbar.visibility = View1.VISIBLE
         toolbarText.visibility = View1.VISIBLE
     }
 
-    private fun hideToolbar() {
+    fun hideToolbar() {
         toolbar.visibility = View1.GONE
         toolbarText.visibility = View1.GONE
     }

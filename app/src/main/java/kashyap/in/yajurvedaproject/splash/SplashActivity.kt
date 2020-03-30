@@ -13,7 +13,7 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
-import kashyap.`in`.yajurvedaproject.userseperation.SeparationActivity
+import kashyap.`in`.yajurvedaproject.login.LoginActivity
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import java.util.concurrent.Executor
@@ -44,7 +44,7 @@ class SplashActivity : BaseActivity() {
         if (PrefUtils.hasKey(this, IS_QUARANTINED)) {
             GeneralUtils.handleQuarantinedOrNot(this)
         } else {
-            startActivity(Intent(this, SeparationActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
             overridePendingTransition(R.anim.enter, R.anim.exit)
         }
