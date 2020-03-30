@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:overScrollMode="never"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:overScrollMode="never">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,10 +43,10 @@
                     android:layout_marginEnd="@dimen/_16dp"
                     android:background="@color/white"
                     android:padding="@dimen/_5dp"
-                    android:textStyle="bold"
-                    android:text="Please submit before stop watch ends."
+                    android:text="You will be prompted to submit your data after stopwatch ends."
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_16sp" />
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvStopwatchValue"
@@ -103,8 +103,8 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_16dp"
                         android:text="Body Temperature"
-                        android:textSize="@dimen/font_16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_16sp" />
 
                     <EditText
                         android:id="@+id/etTempValue"

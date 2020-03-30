@@ -42,7 +42,7 @@ const val IS_REMINDER_ALREADY_SET = "isReminderAlreadySet"
 const val IS_QUARANTINED = "ISQuarantined"
 const val LATITUDE = "Latitude"
 const val LONGITUDE = "Longitude"
-const val COUNT_DOWN_START_TIME = "CountDownStartTime"
+const val COUNT_DOWN_START_TIME = "countDownStartTime"
 
 
 //View related

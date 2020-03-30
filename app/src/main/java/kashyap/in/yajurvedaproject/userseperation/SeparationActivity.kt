@@ -36,7 +36,7 @@ class SeparationActivity : BaseActivity() {
     override fun onAllPermissionsAcquired() {
         GeneralUtils.showDialogWithButtons(
             context,
-            "Consider the current location as your home location?",
+            "Consider current location as your home location?",
             "We need the location where you will be staying quarantined.",
             "No",
             "Sure",

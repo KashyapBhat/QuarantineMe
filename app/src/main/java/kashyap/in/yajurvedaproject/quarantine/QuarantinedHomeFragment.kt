@@ -19,15 +19,16 @@ import androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProv
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.face.Face
 import com.google.android.gms.vision.face.FaceDetector
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
-import kashyap.`in`.yajurvedaproject.common.COUNT_DOWN_START_TIME
-import kashyap.`in`.yajurvedaproject.common.QUARANTINE_DATA
+import kashyap.`in`.yajurvedaproject.common.*
 import kashyap.`in`.yajurvedaproject.models.Quarantine
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_quarantined_home.*
+import java.io.ByteArrayOutputStream
 
 class QuarantinedHomeFragment : BaseFragment() {
 
@@ -93,11 +94,13 @@ class QuarantinedHomeFragment : BaseFragment() {
     }
 
     private fun getImages(): List<String>? {
+        var listImages: List<String> = emptyList()
         val storage: FirebaseStorage = FirebaseStorage.getInstance()
-        val pdfRef: StorageReference = storage.reference.child("banner")
-        pdfRef.listAll()
+        val ref: StorageReference = storage.reference.child("banner")
+        ref.listAll()
             .addOnSuccessListener {
                 Log.d("Firebase: ", "Url created $it")
+                listImages = it.items as List<String>
             }.addOnFailureListener {
                 Log.d("", it.toString())
             }
@@ -130,19 +133,9 @@ class QuarantinedHomeFragment : BaseFragment() {
     private fun handleStopWatch() {
         // TODO: Save to firebase
         // Handle timings
-        var countDownStartTime: Long = 0
         val xMins: Long = quarantine?.xMins ?: 15
-        val currentTime: Long = System.currentTimeMillis();
-
-        if (!PrefUtils.hasKey(getActivity(), COUNT_DOWN_START_TIME)) {
-            countDownStartTime = currentTime
-            PrefUtils.saveToPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime)
-        } else {
-            countDownStartTime =
-                PrefUtils.getFromPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime) as Long
-        }
-
-        val timeRemaining = currentTime - countDownStartTime
+        val timeRemaining: Long = getTimeRemaining()
+        enableSubmitScreen(false)
         if (timeRemaining > xMins) {
             onTimeFinish()
         } else {
@@ -162,9 +155,48 @@ class QuarantinedHomeFragment : BaseFragment() {
         }
     }
 
-    private fun onTimeFinish() {
-        tvStopwatchValue?.text = 0.toString().plus(":").plus(0.toString())
+    private fun getTimeRemaining(): Long {
+        val currentTime: Long = System.currentTimeMillis()
+        var countDownStartTime: Long = 0
+        var countDownFBStartTime: Long = 0
+        if (!PrefUtils.hasKey(getActivity(), COUNT_DOWN_START_TIME)) {
+            countDownStartTime = currentTime
+            PrefUtils.saveToPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime)
+        } else {
+            countDownStartTime =
+                PrefUtils.getFromPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime) as Long
+        }
 
+        val db = FirebaseFirestore.getInstance()
+        db.collection("userData")
+            .document("userId1")
+            .get()
+            .addOnSuccessListener {
+                Log.d("Firebase Document:", "Data: " + it.data?.entries)
+                countDownFBStartTime = it?.data?.get(COUNT_DOWN_START_TIME) as Long? ?: 0.toLong()
+            }.addOnFailureListener {
+                Log.d("Firebase Document:", "Data: $it")
+            }
+        if (countDownFBStartTime == 0.toLong()) {
+            val user = hashMapOf(
+                "countDownStartTime" to countDownStartTime
+            )
+            db.collection("userData")
+                .document("userId1")
+                .set(user)
+                .addOnSuccessListener { documentReference ->
+                    Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("TAG", "Error adding document", e)
+                }
+
+        }
+        return currentTime - countDownStartTime
+    }
+
+    private fun onTimeFinish() {
+        enableSubmitScreen(true)
     }
 
     private fun takeImage() {
@@ -186,7 +218,7 @@ class QuarantinedHomeFragment : BaseFragment() {
         }
     }
 
-    private fun detectFace(bitmap: Bitmap) {
+    private fun detectFace(bitmap: Bitmap?) {
         val detector: FaceDetector = FaceDetector.Builder(context)
             .setTrackingEnabled(false)
             .setLandmarkType(FaceDetector.ALL_LANDMARKS)
@@ -220,13 +252,71 @@ class QuarantinedHomeFragment : BaseFragment() {
         }
     }
 
-    private fun handleImageUpload(bitmap: Bitmap) {
-        btPhoto?.text = "Image Added"
+    private fun handleImageUpload(bitmap: Bitmap?) {
+        enableImageButton(false)
         // TODO: Store the bitmap into image
         // TODO: Save to firebase
         btSubmit?.setOnClickListener {
-
+            if (etTempValue?.text?.isEmpty() == true || bitmap == null) {
+                showSnackBar(
+                    "Please add image, temperature value, issues if any and then submit",
+                    "Okay",
+                    null
+                )
+            }
+            storeTemperatureValue()
+            storeImageInCloud(bitmap)
         }
+    }
+
+    private fun enableImageButton(enable: Boolean) {
+        btPhoto?.text = if (enable) "Add Image" else "Image Added"
+        btPhoto?.setTextColor(resources.getColor(if (enable) R.color.black else R.color.grey))
+        btPhoto?.setBackgroundColor(resources.getColor(if (enable) R.color.white else R.color.darker_grey))
+        btPhoto?.isEnabled = enable
+    }
+
+    private fun enableSubmitScreen(enable: Boolean) {
+        llAdd?.visibility = if (enable) View.VISIBLE else View.GONE
+        rlTemp?.visibility = if (enable) View.VISIBLE else View.GONE
+        tvStopwatch?.text =
+            if (enable) "Please enter the required data and submit." else "You will be prompted to submit your data after stopwatch ends."
+        btSubmit?.visibility = if (enable) View.VISIBLE else View.GONE
+        tvStopwatchValue?.visibility = if (!enable) View.VISIBLE else View.GONE
+
+    }
+
+    private fun storeImageInCloud(bitmap: Bitmap?) {
+        val storage: FirebaseStorage = FirebaseStorage.getInstance()
+        val ref: StorageReference = storage.reference.child("userFace")
+        val mountainsRef = ref.child("image.jpg")
+        val baos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        val uploadTask = mountainsRef.putBytes(data)
+        uploadTask.addOnSuccessListener {
+            enableImageButton(true)
+        }.addOnFailureListener {
+            enableImageButton(true)
+        }
+    }
+
+    private fun storeTemperatureValue() {
+        val user = hashMapOf(
+            "Temperature" to etTempValue?.text?.toString()
+        )
+        val db = FirebaseFirestore.getInstance()
+        db.collection("userData")
+            .document("userId1")
+            .set(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")
+                etTempValue?.setText("")
+            }
+            .addOnFailureListener { e ->
+                Log.w("TAG", "Error adding document", e)
+                etTempValue?.setText("")
+            }
     }
 
     private fun handleEmergencyButton() {
