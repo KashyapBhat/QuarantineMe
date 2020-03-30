@@ -4,8 +4,6 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
@@ -13,6 +11,7 @@ import kashyap.`in`.yajurvedaproject.common.WEBVIEW_FRAGMENT
 import kashyap.`in`.yajurvedaproject.info.InfoFragment
 import kashyap.`in`.yajurvedaproject.notifications.NotificationFragment
 import kashyap.`in`.yajurvedaproject.utils.FragmentInteractor
+import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.getAddressFromLocation
 import kashyap.`in`.yajurvedaproject.webview.WebviewFragment
 import kotlinx.android.synthetic.main.activity_quarantine.*
 
@@ -22,6 +21,7 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quarantine)
+        showProgress()
         checkPermissionsAndRun()
         qmbottomNav.setOnNavigationItemSelectedListener(this)
     }
@@ -34,15 +34,9 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
     }
 
     override fun onLocationResult(location: Location?) {
+        replaceFragment(this, QuarantinedHomeFragment.newInstance(), R.id.flContainer)
+        getAddressFromLocation(context, location)
         hideProgress()
-        replaceFragment(this, QuarantinedHomeFragment.newInstance(quarantine), R.id.flContainer)
-        // TODO: Save to firebase
-        // Check with the older
-        Toast.makeText(
-            this,
-            "" + " Lat: " + location?.latitude + " Long: " + location?.longitude,
-            Toast.LENGTH_SHORT
-        ).show()
         Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
     }
 
@@ -51,13 +45,13 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
             R.id.qmmi1 -> {
                 replaceFragment(
                     this,
-                    QuarantinedHomeFragment.newInstance(quarantine),
+                    QuarantinedHomeFragment.newInstance(),
                     R.id.flContainer
                 )
                 return true
             }
             R.id.qmmi2 -> {
-                val fragment = InfoFragment.newInstance(quarantine)
+                val fragment = InfoFragment.newInstance()
                 fragment.setFragmentInteractor(this)
                 replaceFragment(
                     this,
@@ -69,7 +63,7 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
             R.id.qmmi3 -> {
                 replaceFragment(
                     this,
-                    NotificationFragment.newInstance(quarantine),
+                    NotificationFragment.newInstance(),
                     R.id.flContainer
                 )
                 return true

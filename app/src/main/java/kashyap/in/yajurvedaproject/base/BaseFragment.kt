@@ -10,14 +10,20 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import kashyap.`in`.yajurvedaproject.models.Quarantine
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.transact
 
 
 abstract class BaseFragment : Fragment() {
 
-    protected var listener: OnFragmentInteractionListener? = null
     protected var activity: Activity? = null
+    protected var quarantine: Quarantine? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +41,44 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hideProgress()
+        getQuarantineDataFromFb()
+    }
+
+    fun getQuarantineDataFromFb() {
+        showProgress()
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("quarantine")
+        myRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value: HashMap<*, *>? = dataSnapshot.value as HashMap<*, *>?
+                quarantine = getJsonFromHashmap(value)
+                hideProgress()
+                afterFBDataFetch()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                hideProgress()
+                showSnackBar(
+                    "Something went wrong",
+                    "Retry",
+                    Runnable { getQuarantineDataFromFb() })
+                Log.w("", "Failed to read value.", error.toException())
+            }
+        })
+    }
+
+    abstract fun afterFBDataFetch()
+
+    private fun getJsonFromHashmap(value: HashMap<*, *>?): Quarantine {
+        val gson = Gson()
+        val jsonElement = gson.toJsonTree(value)
+        return gson.fromJson(jsonElement, Quarantine::class.java)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener && activity == null && context is Activity) {
-            listener = context
+        if (activity == null && context is Activity) {
             activity = getActivity() as Activity
         } else {
             Log.d("Exception: ", "$context must implement OnFragmentInteractionListener")
@@ -49,23 +87,12 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        listener = null
         activity = null
     }
 
-    interface OnFragmentInteractionListener {
-        fun showOrHideOptions()
-    }
+    abstract fun showProgress()
 
-    fun showProgress() {
-        if (activity != null && activity is BaseActivity)
-            (activity as BaseActivity).showProgress()
-    }
-
-    fun hideProgress() {
-        if (activity != null && activity is BaseActivity)
-            (activity as BaseActivity).hideProgress()
-    }
+    abstract fun hideProgress()
 
     fun showSnackBar(title: String, actionText: String, runnable: Runnable?) {
         getActivity()?.window?.let { GeneralUtils.showSnackBar(title, it, actionText, runnable) }

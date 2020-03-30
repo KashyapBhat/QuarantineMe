@@ -10,14 +10,13 @@ import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.QUARANTINE_DATA
 import kashyap.`in`.yajurvedaproject.models.Notification
 import kashyap.`in`.yajurvedaproject.models.Quarantine
+import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 
 class NotificationFragment : BaseFragment() {
-    private var quarantine: Quarantine? = null
-
     companion object {
         @JvmStatic
-        fun newInstance(quarantine: Quarantine?) =
+        fun newInstance() =
             NotificationFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(QUARANTINE_DATA, quarantine)
@@ -38,18 +37,35 @@ class NotificationFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            quarantine = it.getParcelable(QUARANTINE_DATA)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        swNoti?.setOnRefreshListener {
+            getQuarantineDataFromFb()
+        }
+    }
+
+    override fun afterFBDataFetch() {
         rvNotification?.layoutManager = LinearLayoutManager(getActivity())
-        mAdapter = NotificationAdapter(quarantine?.notificationList ?: emptyList())
+        mAdapter = NotificationAdapter(getNotificationList())
         rvNotification?.adapter = mAdapter
         mAdapter?.notifyDataSetChanged()
         // TODO: Save to firebase
         // Get notifications data
+    }
+
+    override fun showProgress() {
+        swNoti?.isRefreshing = true
+    }
+
+    override fun hideProgress() {
+        swNoti?.isRefreshing = false
+    }
+
+    private fun getNotificationList(): List<Notification?>? {
+        return quarantine?.notificationList ?: emptyList()
     }
 
 }

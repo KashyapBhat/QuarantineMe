@@ -44,8 +44,19 @@ class WebviewFragment : BaseFragment(), CustomWebViewClient.WebViewClientIntf {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        showProgress()
         setUpWebview(webView, this)
+    }
+
+    override fun afterFBDataFetch() {
+    }
+
+    override fun showProgress() {
+        srWebview?.isRefreshing = true
+    }
+
+    override fun hideProgress() {
+        srWebview?.isRefreshing = false
     }
 
     @SuppressLint("SetJavaScriptEnabled")

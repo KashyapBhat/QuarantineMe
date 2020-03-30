@@ -1,16 +1,19 @@
 package kashyap.`in`.yajurvedaproject.utils
 
 import android.Manifest
-import android.R
 import android.app.Activity
 import android.app.Dialog
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.media.RingtoneManager
 import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.Window
@@ -18,17 +21,19 @@ import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.FragmentManager
+import com.google.firebase.firestore.FirebaseFirestore
 import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
-import kashyap.`in`.yajurvedaproject.nonquarantine.NonQuarantineActivity
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 import kashyap.`in`.yajurvedaproject.splash.SplashActivity
+import kotlinx.android.synthetic.main.fragment_quarantined_home.*
+import java.util.*
 
 
 /**
@@ -262,6 +267,39 @@ class GeneralUtils {
             if (customSnackbar?.isShownOrQueued == false) {
                 customSnackbar?.show()
             }
+        }
+
+        private fun getAddressFromLatLong(
+            context: Context,
+            latitude: Double?,
+            longitude: Double?
+        ): String {
+            val addresses: List<Address?>?
+            val geoCoder: Geocoder? = Geocoder(context, Locale.getDefault())
+            addresses = geoCoder?.getFromLocation(
+                latitude ?: 0.0,
+                longitude ?: 0.0,
+                1
+            )
+            val address: String = addresses?.get(0)?.getAddressLine(0) ?: ""
+            val city: String = addresses?.get(0)?.locality ?: ""
+            val state: String = addresses?.get(0)?.adminArea ?: ""
+            val country: String = addresses?.get(0)?.countryName ?: ""
+            val postalCode: String = addresses?.get(0)?.postalCode ?: ""
+            val knownName: String = addresses?.get(0)?.featureName ?: ""
+            Toast.makeText(
+                context,
+                " Lat: $latitude Long: $longitude /n Address: $address /n City: $city $state $country $postalCode $knownName",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (address.isEmpty() || address.isBlank()) {
+                return "$city $state $country $postalCode $knownName"
+            }
+            return address
+        }
+
+        fun getAddressFromLocation(context: Context, location: Location?): String {
+            return getAddressFromLatLong(context, location?.latitude, location?.longitude)
         }
     }
 }

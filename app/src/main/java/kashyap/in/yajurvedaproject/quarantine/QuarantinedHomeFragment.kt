@@ -33,15 +33,13 @@ import java.io.ByteArrayOutputStream
 class QuarantinedHomeFragment : BaseFragment() {
 
     private val CAMERA_REQUEST = 1888
-    private var quarantine: Quarantine? = null
     private var bannerAdapter: BannerAdapter? = null
 
     companion object {
         @JvmStatic
-        fun newInstance(quarantine: Quarantine?) =
+        fun newInstance() =
             QuarantinedHomeFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(QUARANTINE_DATA, quarantine)
                 }
             }
     }
@@ -57,16 +55,33 @@ class QuarantinedHomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            quarantine = it.getParcelable(QUARANTINE_DATA)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        handleQuarantineOrNot()
+    }
+
+    override fun afterFBDataFetch() {
         btPhoto?.setOnClickListener { takeImage() }
+        tvActiveValue?.text = quarantine?.activeCase
+        tvCuredValue?.text = quarantine?.curedCase
+        tvDeathValue?.text = quarantine?.deathCase
         handleBanner()
         handleStopWatch()
         handleEmergencyButton()
+    }
+
+    private fun handleQuarantineOrNot() {
+        cvMain?.visibility = if (PrefUtils.isQuarantined(context)) View.VISIBLE else View.GONE
+    }
+
+    override fun showProgress() {
+
+    }
+
+    override fun hideProgress() {
     }
 
     private fun handleBanner() {
@@ -75,6 +90,7 @@ class QuarantinedHomeFragment : BaseFragment() {
         bannerAdapter = BannerAdapter(getImages(), context)
         rvBanner?.adapter = bannerAdapter
         bannerAdapter?.notifyDataSetChanged()
+        rvBanner?.onFlingListener = null
         val linearSnapHelper = SnapHelperOneByOne()
         linearSnapHelper.attachToRecyclerView(rvBanner)
         var i = 0
@@ -93,24 +109,8 @@ class QuarantinedHomeFragment : BaseFragment() {
         }.start()
     }
 
-    private fun getImages(): List<String>? {
-        var listImages: List<String> = emptyList()
-        val storage: FirebaseStorage = FirebaseStorage.getInstance()
-        val ref: StorageReference = storage.reference.child("banner")
-        ref.listAll()
-            .addOnSuccessListener {
-                Log.d("Firebase: ", "Url created $it")
-                listImages = it.items as List<String>
-            }.addOnFailureListener {
-                Log.d("", it.toString())
-            }
-        return listOf(
-            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F1.png?alt=media&token=f8d8ee48-f0e0-4dac-aa9f-bdad983e6fa1",
-            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F2.png?alt=media&token=c84b46e0-74e2-4d58-bac1-5ab098fbdca7",
-            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F3.png?alt=media&token=79829f1e-0221-4561-b256-d78c59afce0f",
-            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F4.png?alt=media&token=e702ee6b-01d9-474a-b82b-593dbfc3668f",
-            "https://firebasestorage.googleapis.com/v0/b/qarantineme.appspot.com/o/banner%2F5.png?alt=media&token=331c519c-b878-4cda-96bb-2ea3a5b4c966"
-        )
+    private fun getImages(): List<String?>? {
+        return quarantine?.bannerImages ?: emptyList()
     }
 
     class SnapHelperOneByOne : LinearSnapHelper() {

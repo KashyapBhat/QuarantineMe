@@ -44,4 +44,14 @@ class SuccessFragment : BaseFragment() {
             getActivity()?.let { it1 -> GeneralUtils.openQActivity(it1) }
         }
     }
+
+    override fun afterFBDataFetch() {
+    }
+
+    override fun showProgress() {
+
+    }
+
+    override fun hideProgress() {
+    }
 }

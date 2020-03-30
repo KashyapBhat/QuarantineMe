@@ -30,6 +30,16 @@ class AboutUsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_show_pdf, container, false)
     }
 
+    override fun afterFBDataFetch() {
+    }
+
+    override fun showProgress() {
+
+    }
+
+    override fun hideProgress() {
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

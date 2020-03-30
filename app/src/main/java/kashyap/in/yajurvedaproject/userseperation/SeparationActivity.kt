@@ -9,10 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
-import kashyap.`in`.yajurvedaproject.common.HOME_LOCATION
-import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
-import kashyap.`in`.yajurvedaproject.common.LATITUDE
-import kashyap.`in`.yajurvedaproject.common.LONGITUDE
+import kashyap.`in`.yajurvedaproject.common.*
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.activity_separation.*
@@ -83,7 +80,8 @@ class SeparationActivity : BaseActivity() {
     private fun saveToFirebase(location: Location?) {
         val init = hashMapOf(
             HOME_LOCATION to GeoPoint(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
-            IS_QUARANTINED to isQuarantined
+            IS_QUARANTINED to isQuarantined,
+            HOME_ADDRESS to GeneralUtils.getAddressFromLocation(context, location)
         )
         val db = FirebaseFirestore.getInstance()
         db.collection(PrefUtils.userId(context))
