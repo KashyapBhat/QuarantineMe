@@ -40,8 +40,8 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
         // Check with the older
         Toast.makeText(
             this,
-            "Location ::::" + " Lat: " + location?.latitude + " Long: " + location?.longitude,
-            Toast.LENGTH_LONG
+            "" + " Lat: " + location?.latitude + " Long: " + location?.longitude,
+            Toast.LENGTH_SHORT
         ).show()
         Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
     }

@@ -25,7 +25,6 @@ import androidx.fragment.app.FragmentManager
 import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
-import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.nonquarantine.NonQuarantineActivity
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
@@ -243,12 +242,8 @@ class GeneralUtils {
             transaction?.commit()
         }
 
-        fun handleQuarantinedOrNot(context: Activity) {
-            if (PrefUtils.getFromPrefs(context, IS_QUARANTINED, false) as Boolean) {
-                context.startActivity(Intent(context, QuarantineActivity::class.java))
-            } else {
-                context.startActivity(Intent(context, NonQuarantineActivity::class.java))
-            }
+        fun openQActivity(context: Activity) {
+            context.startActivity(Intent(context, QuarantineActivity::class.java))
             context.finish()
         }
 

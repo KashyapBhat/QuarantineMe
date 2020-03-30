@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
+import kashyap.in.yajurvedaproject.common.ConstantsKt;
+
 /**
  * THANKS TO : https://gist.github.com/john1jan/ for this.
  * Created by john.francis on 24/05/16.
@@ -72,6 +74,22 @@ public class PrefUtils {
             }
         }
         return defaultValue;
+    }
+
+    public static boolean hasQuarantineValue(Context context) {
+        return PrefUtils.hasKey(context, ConstantsKt.IS_QUARANTINED);
+    }
+
+    public static boolean isQuarantined(Context context) {
+        return (boolean) PrefUtils.getFromPrefs(context, ConstantsKt.IS_QUARANTINED, false);
+    }
+
+    public static long userPhoneNumber(Context context) {
+        return (long) PrefUtils.getFromPrefs(context, ConstantsKt.USER_PHONE_NUMBER, "0");
+    }
+
+    public static String userId(Context context) {
+        return PrefUtils.getFromPrefs(context, ConstantsKt.USER_PHONE_NUMBER, "").toString().trim();
     }
 
     public static void removeFromPrefs(Context context, String key) {

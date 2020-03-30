@@ -49,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     private lateinit var baseLayout: RelativeLayout
     private lateinit var networkReceiver: NetworkReceiver
     protected lateinit var context: Context
+    protected lateinit var activity: BaseActivity
     protected var quarantine: Quarantine? = null
     private var locationFetcher: LocationUtils? = null
     private var onActivityResultListener: OnActivityResultListener? = null
@@ -68,6 +69,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
         viewStub.layoutResource = layoutResID
         viewStub.inflate()
         context = this
+        activity = this
     }
 
     fun initView() {

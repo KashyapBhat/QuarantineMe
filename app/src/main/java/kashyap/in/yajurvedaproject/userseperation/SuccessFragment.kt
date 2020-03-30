@@ -38,10 +38,10 @@ class SuccessFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btSuccess.setOnClickListener {
-            getActivity()?.let { it1 -> GeneralUtils.handleQuarantinedOrNot(it1) }
+            getActivity()?.let { it1 -> GeneralUtils.openQActivity(it1) }
         }
         ivCross.setOnClickListener {
-            getActivity()?.let { it1 -> GeneralUtils.handleQuarantinedOrNot(it1) }
+            getActivity()?.let { it1 -> GeneralUtils.openQActivity(it1) }
         }
     }
 }

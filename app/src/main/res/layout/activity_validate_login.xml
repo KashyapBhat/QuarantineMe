@@ -52,7 +52,7 @@
             android:layout_marginEnd="@dimen/_20dp"
             android:digits="0123456789"
             android:drawablePadding="10dp"
-            android:hint="Enter verfication code"
+            android:hint="Enter verification code"
             android:imeOptions="actionDone"
             android:inputType="phone"
             android:maxLength="10"

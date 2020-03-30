@@ -12,9 +12,8 @@ import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
-import kashyap.`in`.yajurvedaproject.common.IS_QUARANTINED
 import kashyap.`in`.yajurvedaproject.login.LoginActivity
-import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
+import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.openQActivity
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -31,22 +30,21 @@ class SplashActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            PrefUtils.getFromPrefs(context, IS_QUARANTINED, false) as Boolean
-        ) {
-            biometrics()
-        } else {
-            Handler().postDelayed({ handleUserInfoIsStoredOrNot() }, 3 * 1000)
-        }
+        handleUserInfoIsStoredOrNot()
     }
 
     private fun handleUserInfoIsStoredOrNot() {
-        if (PrefUtils.hasKey(this, IS_QUARANTINED)) {
-            GeneralUtils.handleQuarantinedOrNot(this)
-        } else {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            overridePendingTransition(R.anim.enter, R.anim.exit)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && PrefUtils.hasQuarantineValue(context) && PrefUtils.isQuarantined(context)
+            -> biometrics()
+            PrefUtils.hasQuarantineValue(context) && !PrefUtils.isQuarantined(context)
+            -> Handler().postDelayed({ openQActivity(this) }, 3 * 1000)
+            else -> Handler().postDelayed({
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                overridePendingTransition(R.anim.enter, R.anim.exit)
+            }, 3 * 1000)
         }
     }
 
@@ -55,7 +53,7 @@ class SplashActivity : BaseActivity() {
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate()) {
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE, BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                handleUserInfoIsStoredOrNot()
+                openQActivity(this)
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
                 showSnackBar("Please enable fingerprint / face detection before we go ahead",
                     "Go to settings",
@@ -93,14 +91,14 @@ class SplashActivity : BaseActivity() {
                     super.onAuthenticationError(errorCode, errString)
                     when (errorCode) {
                         BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_UNABLE_TO_PROCESS, BiometricConstants.ERROR_HW_NOT_PRESENT ->
-                            handleUserInfoIsStoredOrNot()
+                            openQActivity(activity)
                     }
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     runOnUiThread {
-                        handleUserInfoIsStoredOrNot()
+                        openQActivity(activity)
                     }
                 }
 

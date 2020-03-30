@@ -4,13 +4,17 @@ import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
+import kashyap.`in`.yajurvedaproject.common.USER_ID
+import kashyap.`in`.yajurvedaproject.common.USER_PHONE_NUMBER
 import kashyap.`in`.yajurvedaproject.userseperation.SeparationActivity
+import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.activity_validate_login.*
 import java.util.concurrent.TimeUnit
 
@@ -53,7 +57,8 @@ class ValidateLoginActivity : BaseActivity() {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Something went wrong\n" + e.message, Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onCodeSent(
@@ -87,27 +92,31 @@ class ValidateLoginActivity : BaseActivity() {
                 this
             ) { task ->
                 if (task.isSuccessful) {
+                    progressbar?.visibility = View.GONE
                     val user = task.result?.user
                     onVerificationSuccessful(user)
                 } else {
                     var message =
-                        "Somthing is wrong, we will fix it soon..."
+                        "Somthing went wrong..."
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         message = "Invalid code entered..."
                     }
-                    showSnackBar(message, "Okay", null)
+                    showSnackBar(message, "Okay", Runnable { this.finish() })
                 }
             }
     }
 
     private fun onVerificationSuccessful(user: FirebaseUser?) {
-        startActivity(Intent(this, SeparationActivity::class.java))
-        finish()
-        overridePendingTransition(R.anim.enter, R.anim.exit)
         Log.d(
             "User Login successful",
             "Verified Successfully." + user?.uid + user?.phoneNumber + user?.displayName
         )
+        PrefUtils.saveToPrefs(context, USER_PHONE_NUMBER, user?.phoneNumber)
+        PrefUtils.saveToPrefs(context, USER_ID, user?.uid)
+        startActivity(Intent(this, SeparationActivity::class.java))
+        finish()
+        overridePendingTransition(R.anim.enter, R.anim.exit)
+
     }
 
     override fun networkChanged() {
