@@ -7,9 +7,10 @@
     android:overScrollMode="never"
     android:scrollbars="none">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBanner"
@@ -125,6 +126,48 @@
                     android:layout_below="@+id/rlTemp"
                     android:text="Submit" />
             </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvMainNonQuarantine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rvBanner"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:elevation="@dimen/_5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvIssueNonQuarantine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_16dp"
+                    android:background="@color/white"
+                    android:padding="@dimen/_5dp"
+                    android:text="Do you feel any discomfort?"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btIssueNonQuarantine"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/white"
+                    android:text="Add issue"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <RelativeLayout
@@ -260,5 +303,5 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

@@ -137,6 +137,9 @@ class QuarantinedHomeFragment : BaseFragment() {
 
     private fun handleQuarantineOrNot() {
         cvMain?.visibility = if (PrefUtils.isQuarantined(context)) View.VISIBLE else View.GONE
+        cvMainNonQuarantine?.visibility =
+            if (!PrefUtils.isQuarantined(context)) View.VISIBLE else View.GONE
+        btIssueNonQuarantine?.setOnClickListener { handleIssue() }
     }
 
     override fun showProgress() {
