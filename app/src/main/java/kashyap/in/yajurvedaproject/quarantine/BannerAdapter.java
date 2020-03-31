@@ -49,7 +49,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
         Glide.with(context)
                 .load(url)
                 .placeholder(R.drawable.splash)
-                .fitCenter()
+                .centerCrop()
                 .into(holder.ivBanner);
     }
 

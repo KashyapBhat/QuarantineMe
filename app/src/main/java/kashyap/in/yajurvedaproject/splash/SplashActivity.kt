@@ -39,7 +39,7 @@ class SplashActivity : BaseActivity() {
                     && PrefUtils.hasQuarantineValue(context) && PrefUtils.isQuarantined(context)
             -> biometrics()
             PrefUtils.hasQuarantineValue(context) && !PrefUtils.isQuarantined(context)
-            -> Handler().postDelayed({ openQActivity(this) }, 3 * 1000)
+            -> openQActivity(this, 3 * 1000)
             else -> Handler().postDelayed({
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
@@ -53,7 +53,7 @@ class SplashActivity : BaseActivity() {
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate()) {
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE, BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                openQActivity(this)
+                openQActivity(this, 1300)
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
                 showSnackBar("Please enable fingerprint / face detection before we go ahead",
                     "Go to settings",
@@ -91,14 +91,14 @@ class SplashActivity : BaseActivity() {
                     super.onAuthenticationError(errorCode, errString)
                     when (errorCode) {
                         BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_UNABLE_TO_PROCESS, BiometricConstants.ERROR_HW_NOT_PRESENT ->
-                            openQActivity(activity)
+                            openQActivity(activity, 1300)
                     }
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     runOnUiThread {
-                        openQActivity(activity)
+                        openQActivity(activity, 300)
                     }
                 }
 

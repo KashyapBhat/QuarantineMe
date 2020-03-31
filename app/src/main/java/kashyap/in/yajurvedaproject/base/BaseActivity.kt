@@ -75,10 +75,11 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     fun initView() {
         hideProgress()
         locationFetcher = LocationUtils(this, this)
-        getQuarantineDataFromFb()
+//        getQuarantineDataFromFb()
     }
 
     private fun getQuarantineDataFromFb() {
+        showProgress()
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("quarantine")
         myRef.addValueEventListener(object : ValueEventListener {
@@ -86,6 +87,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value: HashMap<*, *>? = dataSnapshot.value as HashMap<*, *>?
                 quarantine = getJsonFromHashmap(value)
+                hideProgress()
             }
 
             override fun onCancelled(error: DatabaseError) {

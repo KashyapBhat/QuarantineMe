@@ -19,7 +19,6 @@ class NotificationFragment : BaseFragment() {
         fun newInstance() =
             NotificationFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(QUARANTINE_DATA, quarantine)
                 }
             }
     }

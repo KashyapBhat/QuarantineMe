@@ -55,7 +55,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.MyViewHolder> 
         Glide.with(context)
                 .load(information.getImageUrl())
                 .placeholder(R.drawable.splash)
-                .centerCrop()
+                .centerInside()
                 .into(holder.ivInfoImage);
         holder.tvInfoHeader.setText(information.getHeader());
         holder.tvInfoDesc.setText(information.getDesc());

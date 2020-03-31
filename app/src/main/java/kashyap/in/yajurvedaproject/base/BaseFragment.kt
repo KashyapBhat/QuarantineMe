@@ -53,8 +53,8 @@ abstract class BaseFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value: HashMap<*, *>? = dataSnapshot.value as HashMap<*, *>?
                 quarantine = getJsonFromHashmap(value)
-                hideProgress()
                 afterFBDataFetch()
+                hideProgress()
             }
 
             override fun onCancelled(error: DatabaseError) {

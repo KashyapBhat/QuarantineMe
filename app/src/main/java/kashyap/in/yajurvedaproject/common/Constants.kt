@@ -47,6 +47,8 @@ const val LONGITUDE = "Longitude"
 const val COUNT_DOWN_START_TIME = "countDownStartTime"
 const val USER_PHONE_NUMBER = "UserPhoneNumber"
 const val USER_ID = "UserID"
+const val USER_NAME = "UserName"
+const val USER_EMAIL = "UserEmail"
 
 
 //View related

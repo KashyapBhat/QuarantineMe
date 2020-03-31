@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kashyap.`in`.yajurvedaproject.ProfileFragment
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.common.WEBVIEW_FRAGMENT
@@ -36,13 +37,13 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
     override fun onLocationResult(location: Location?) {
         replaceFragment(this, QuarantinedHomeFragment.newInstance(), R.id.flContainer)
         getAddressFromLocation(context, location)
-        hideProgress()
         Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.qmmi1 -> {
+                showProgress()
                 replaceFragment(
                     this,
                     QuarantinedHomeFragment.newInstance(),
@@ -69,7 +70,11 @@ class QuarantineActivity : BaseActivity(), BottomNavigationView.OnNavigationItem
                 return true
             }
             R.id.qmmi4 -> {
-
+                replaceFragment(
+                    this,
+                    ProfileFragment.newInstance(),
+                    R.id.flContainer
+                )
                 return true
             }
         }

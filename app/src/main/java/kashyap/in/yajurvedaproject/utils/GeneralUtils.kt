@@ -12,6 +12,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
@@ -247,9 +248,11 @@ class GeneralUtils {
             transaction?.commit()
         }
 
-        fun openQActivity(context: Activity) {
-            context.startActivity(Intent(context, QuarantineActivity::class.java))
-            context.finish()
+        fun openQActivity(context: Activity, delay: Long) {
+            Handler().postDelayed({
+                context.startActivity(Intent(context, QuarantineActivity::class.java))
+                context.finish()
+            }, delay)
         }
 
         fun showSnackBar(title: String, window: Window, actionText: String, runnable: Runnable?) {

@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.util.SparseArray
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kashyap.`in`.yajurvedaproject.R
+import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.*
 import kashyap.`in`.yajurvedaproject.models.Quarantine
@@ -49,6 +51,7 @@ class QuarantinedHomeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        customShowAndHideProgress(true)
         return inflater.inflate(R.layout.fragment_quarantined_home, container, false)
     }
 
@@ -60,10 +63,11 @@ class QuarantinedHomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        handleQuarantineOrNot()
     }
 
     override fun afterFBDataFetch() {
+        customShowAndHideProgress(true)
+        handleQuarantineOrNot()
         btPhoto?.setOnClickListener { takeImage() }
         tvActiveValue?.text = quarantine?.activeCase
         tvCuredValue?.text = quarantine?.curedCase
@@ -71,6 +75,7 @@ class QuarantinedHomeFragment : BaseFragment() {
         handleBanner()
         handleStopWatch()
         handleEmergencyButton()
+        customShowAndHideProgress(false)
     }
 
     private fun handleQuarantineOrNot() {
@@ -82,6 +87,13 @@ class QuarantinedHomeFragment : BaseFragment() {
     }
 
     override fun hideProgress() {
+
+    }
+
+    private fun customShowAndHideProgress(shouldShowProgress: Boolean) {
+        if (shouldShowProgress) {
+            (context as BaseActivity?)?.showProgress()
+        } else Handler().postDelayed({ (context as BaseActivity?)?.hideProgress() }, 400)
     }
 
     private fun handleBanner() {
@@ -164,7 +176,11 @@ class QuarantinedHomeFragment : BaseFragment() {
             PrefUtils.saveToPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime)
         } else {
             countDownStartTime =
-                PrefUtils.getFromPrefs(getActivity(), COUNT_DOWN_START_TIME, currentTime) as Long
+                PrefUtils.getFromPrefs(
+                    getActivity(),
+                    COUNT_DOWN_START_TIME,
+                    currentTime
+                ) as Long
         }
 
         val db = FirebaseFirestore.getInstance()
@@ -173,7 +189,8 @@ class QuarantinedHomeFragment : BaseFragment() {
             .get()
             .addOnSuccessListener {
                 Log.d("Firebase Document:", "Data: " + it.data?.entries)
-                countDownFBStartTime = it?.data?.get(COUNT_DOWN_START_TIME) as Long? ?: 0.toLong()
+                countDownFBStartTime =
+                    it?.data?.get(COUNT_DOWN_START_TIME) as Long? ?: 0.toLong()
             }.addOnFailureListener {
                 Log.d("Firebase Document:", "Data: $it")
             }
