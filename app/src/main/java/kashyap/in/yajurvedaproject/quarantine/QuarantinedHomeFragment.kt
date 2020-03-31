@@ -366,7 +366,10 @@ class QuarantinedHomeFragment : BaseFragment() {
     private fun storeImageInCloud(bitmap: Bitmap?) {
         val storage: FirebaseStorage = FirebaseStorage.getInstance()
         val ref: StorageReference = storage.reference.child("userFace")
-        val mountainsRef = ref.child("image.jpg")
+            .child(PrefUtils.userId(context))
+        val mountainsRef = ref.child(
+            (GeneralUtils.getCurrentDate()).plus("---").plus(GeneralUtils.getCurentTime())
+        )
         val baos = ByteArrayOutputStream()
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()

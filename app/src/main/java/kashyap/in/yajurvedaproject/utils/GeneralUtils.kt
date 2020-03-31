@@ -14,7 +14,6 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.Window
@@ -26,14 +25,13 @@ import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.FragmentManager
-import com.google.firebase.firestore.FirebaseFirestore
 import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 import kashyap.`in`.yajurvedaproject.splash.SplashActivity
-import kotlinx.android.synthetic.main.fragment_quarantined_home.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -303,6 +301,14 @@ class GeneralUtils {
 
         fun getAddressFromLocation(context: Context, location: Location?): String {
             return getAddressFromLatLong(context, location?.latitude, location?.longitude)
+        }
+
+        fun getCurentTime(): String {
+            return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+        }
+
+        fun getCurrentDate(): String {
+            return SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         }
     }
 }
