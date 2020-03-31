@@ -12,6 +12,7 @@ data class Quarantine(
     val informationList: List<Information?>?,
     val notificationList: List<Notification?>?,
     val bannerImages: List<String?>?,
+    val healthIssues: List<String?>?,
     val xMins: Long? = 15,
     val emergencyNumber: String?
 ) : Parcelable

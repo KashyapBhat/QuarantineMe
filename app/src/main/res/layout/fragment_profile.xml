@@ -135,7 +135,10 @@
                 android:id="@+id/etAddress"
                 style="@style/EditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:gravity="top|left"
+                android:scrollbars="vertical"
+                android:layout_height="wrap_content"
+                android:lines="4" />
 
             <View
                 android:id="@+id/iMEIDivider"

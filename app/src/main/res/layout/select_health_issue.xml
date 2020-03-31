@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/_5dp"
+        android:text="Are you facing any problems?"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_20sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvIssue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_20dp"
+        tools:listitem="@layout/item_issues" />
+
+    <TextView
+        android:id="@+id/tvIssueWritten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rvIssue"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginEnd="@dimen/_20dp"
+        android:padding="@dimen/_5dp"
+        android:text="If you have any other specific problems, Please include it here"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/etIssueWritten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvIssueWritten"
+        android:layout_marginStart="@dimen/_20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/_20dp"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:scrollbars="vertical"
+        android:textSize="@dimen/font_13sp" />
+
+    <Button
+        android:id="@+id/btDone"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etIssueWritten"
+        android:layout_alignParentBottom="false"
+        android:layout_marginTop="@dimen/_10dp"
+        android:text="Done" />
+</RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.HOME_ADDRESS
+import kashyap.`in`.yajurvedaproject.common.PROFILE_DOC
 import kashyap.`in`.yajurvedaproject.common.USER_EMAIL
 import kashyap.`in`.yajurvedaproject.common.USER_NAME
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
@@ -72,7 +73,7 @@ class ProfileFragment : BaseFragment() {
         )
         val db = FirebaseFirestore.getInstance()
         db.collection(PrefUtils.userId(context))
-            .document("2Profile")
+            .document(PROFILE_DOC)
             .set(init)
             .addOnSuccessListener { documentReference ->
                 Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")

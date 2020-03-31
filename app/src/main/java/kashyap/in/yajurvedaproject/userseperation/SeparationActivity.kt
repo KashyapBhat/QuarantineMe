@@ -85,7 +85,7 @@ class SeparationActivity : BaseActivity() {
         )
         val db = FirebaseFirestore.getInstance()
         db.collection(PrefUtils.userId(context))
-            .document("1Init")
+            .document(INIT_DOC)
             .set(init)
             .addOnSuccessListener { documentReference ->
                 Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")

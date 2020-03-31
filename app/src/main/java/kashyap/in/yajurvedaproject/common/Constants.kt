@@ -49,7 +49,13 @@ const val USER_PHONE_NUMBER = "UserPhoneNumber"
 const val USER_ID = "UserID"
 const val USER_NAME = "UserName"
 const val USER_EMAIL = "UserEmail"
+const val ISSUE_SELECTED = "IssuesSelected"
+const val WRITTEN_ISSUE = "WrittenIssue"
 
+// Firebase Document Names
+const val INIT_DOC = "1Init"
+const val PROFILE_DOC = "2Profile"
+const val ISSUES_DOC = "3Issues"
 
 //View related
 

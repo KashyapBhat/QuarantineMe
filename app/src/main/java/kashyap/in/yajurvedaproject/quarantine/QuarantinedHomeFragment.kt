@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -20,14 +23,17 @@ import androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProv
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.face.Face
 import com.google.android.gms.vision.face.FaceDetector
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.common.*
-import kashyap.`in`.yajurvedaproject.models.Quarantine
+import kashyap.`in`.yajurvedaproject.issue.IssueAdapter
+import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_quarantined_home.*
 import java.io.ByteArrayOutputStream
@@ -36,6 +42,7 @@ class QuarantinedHomeFragment : BaseFragment() {
 
     private val CAMERA_REQUEST = 1888
     private var bannerAdapter: BannerAdapter? = null
+    private var dialog: BottomSheetDialog? = null
 
     companion object {
         @JvmStatic
@@ -69,6 +76,7 @@ class QuarantinedHomeFragment : BaseFragment() {
         customShowAndHideProgress(true)
         handleQuarantineOrNot()
         btPhoto?.setOnClickListener { takeImage() }
+        btIssue?.setOnClickListener { handleIssue() }
         tvActiveValue?.text = quarantine?.activeCase
         tvCuredValue?.text = quarantine?.curedCase
         tvDeathValue?.text = quarantine?.deathCase
@@ -76,6 +84,55 @@ class QuarantinedHomeFragment : BaseFragment() {
         handleStopWatch()
         handleEmergencyButton()
         customShowAndHideProgress(false)
+    }
+
+    private fun handleIssue() {
+        val selectedIssues = ArrayList<String>()
+        val sheetView: View =
+            LayoutInflater.from(context).inflate(R.layout.select_health_issue, null, false)
+        dialog = context?.let { BottomSheetDialog(it, R.style.DialogStyle) }
+        if (dialog?.isShowing == true) {
+            dialog?.dismiss()
+        }
+        val btnDone = sheetView.findViewById<Button>(R.id.btDone)
+        val writtenIssue: EditText = sheetView.findViewById(R.id.etIssueWritten)
+        val rvList: RecyclerView = sheetView.findViewById(R.id.rvIssue)
+        val manager = LinearLayoutManager(context)
+        rvList.layoutManager = manager
+        val issueAdapter = IssueAdapter(getIssuesList(), context, selectedIssues)
+        rvList.adapter = issueAdapter
+        btnDone.setOnClickListener {
+            checkIssuesAndSaveToFB(writtenIssue.text?.toString()?.trim(), selectedIssues)
+            dialog?.dismiss()
+        }
+        dialog?.setContentView(sheetView)
+        dialog?.show()
+    }
+
+    private fun getIssuesList(): List<String?>? {
+        return quarantine?.healthIssues ?: emptyList()
+    }
+
+    private fun checkIssuesAndSaveToFB(
+        writtenIssue: String?,
+        selectedIssues: ArrayList<String>
+    ) {
+        val init = hashMapOf(
+            ISSUE_SELECTED to TextUtils.join(", ", selectedIssues),
+            WRITTEN_ISSUE to writtenIssue
+        )
+        val db = FirebaseFirestore.getInstance()
+        db.collection(PrefUtils.userId(context))
+            .document(ISSUES_DOC)
+            .set(init)
+            .addOnSuccessListener { documentReference ->
+                Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")
+
+            }
+            .addOnFailureListener { e ->
+                Log.w("TAG", "Error adding document", e)
+                showSnackBar("Something went wrong", "Retry", null)
+            }
     }
 
     private fun handleQuarantineOrNot() {
@@ -350,6 +407,11 @@ class QuarantinedHomeFragment : BaseFragment() {
                 startActivity(callIntent)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
     }
 
 }

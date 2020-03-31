@@ -46,6 +46,12 @@
         <item name="android:textSize">@dimen/_15dp</item>
     </style>
 
+    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
     <style name="FilledEditText">
         <item name="android:alpha">0.4</item>
         <item name="android:layout_marginTop">@dimen/_8dp</item>
