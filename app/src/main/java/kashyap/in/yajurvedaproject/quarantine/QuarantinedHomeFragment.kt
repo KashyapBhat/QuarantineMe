@@ -117,6 +117,7 @@ class QuarantinedHomeFragment : BaseFragment() {
         writtenIssue: String?,
         selectedIssues: ArrayList<String>
     ) {
+        enableIssuesButton(false)
         val init = hashMapOf(
             ISSUE_SELECTED to TextUtils.join(", ", selectedIssues),
             WRITTEN_ISSUE to writtenIssue
@@ -340,7 +341,13 @@ class QuarantinedHomeFragment : BaseFragment() {
                     "Okay",
                     null
                 )
+                return@setOnClickListener
             }
+            showSnackBar(
+                "Your data is submitted.",
+                "Great",
+                null
+            )
             storeTemperatureValue()
             storeImageInCloud(bitmap)
         }
@@ -351,6 +358,13 @@ class QuarantinedHomeFragment : BaseFragment() {
         btPhoto?.setTextColor(resources.getColor(if (enable) R.color.black else R.color.grey))
         btPhoto?.setBackgroundColor(resources.getColor(if (enable) R.color.white else R.color.darker_grey))
         btPhoto?.isEnabled = enable
+    }
+
+    private fun enableIssuesButton(enable: Boolean) {
+        btIssue?.text = if (enable) "Add Image" else "Image Added"
+        btIssue?.setTextColor(resources.getColor(if (enable) R.color.black else R.color.grey))
+        btIssue?.setBackgroundColor(resources.getColor(if (enable) R.color.white else R.color.darker_grey))
+        btIssue?.isEnabled = enable
     }
 
     private fun enableSubmitScreen(enable: Boolean) {
@@ -376,8 +390,10 @@ class QuarantinedHomeFragment : BaseFragment() {
         val uploadTask = mountainsRef.putBytes(data)
         uploadTask.addOnSuccessListener {
             enableImageButton(true)
+            enableIssuesButton(true)
         }.addOnFailureListener {
             enableImageButton(true)
+            enableIssuesButton(true)
         }
     }
 
