@@ -5,12 +5,14 @@ A small virus named Corona which started in a city called Wuhan located in China
 
 
 
-#### Demo link: https://www.youtube.com/watch?v=kE9AclBNPX8&feature=youtu.be
+#### Demo link: 
+https://www.youtube.com/watch?v=kE9AclBNPX8&feature=youtu.be
 
-#### PPT link: https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
+#### PPT link: 
+https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
 
 ## Screenshots:
-Will be updating soon.
+
 <div align="center">
  <img title="1" src="0.png" height="490" width="890" title>
  <img title="2 and other settings" src="1.png" height="490" width="890">
