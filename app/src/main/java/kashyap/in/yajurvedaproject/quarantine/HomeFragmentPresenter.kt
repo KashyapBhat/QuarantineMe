@@ -195,7 +195,7 @@ class HomeFragmentPresenter(
     fun onSubmitButtonClick(etTempValue: EditText?) {
         if (etTempValue?.text?.isEmpty() == true || bitmap == null) {
             view?.showHomeSnackBar(
-                "Please add image, temperature value, issues if any and then submit",
+                "Please add image, temperature value, health problems if any and then submit",
                 "Okay", null
             )
             return

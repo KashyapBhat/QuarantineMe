@@ -23,7 +23,6 @@
             android:id="@+id/cvMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rvBanner"
             android:layout_marginStart="@dimen/_16dp"
             android:layout_marginTop="@dimen/_10dp"
             android:layout_marginEnd="@dimen/_16dp"
@@ -41,8 +40,6 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/_10dp"
-                    android:layout_marginEnd="@dimen/_16dp"
                     android:background="@color/white"
                     android:padding="@dimen/_5dp"
                     android:text="You will be prompted to submit your data after stopwatch ends."
@@ -55,8 +52,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvStopwatch"
-                    android:layout_marginStart="@dimen/_10dp"
-                    android:layout_marginEnd="@dimen/_16dp"
                     android:padding="@dimen/_5dp"
                     android:text="00:00:00"
                     android:textSize="@dimen/font_20sp" />
@@ -66,8 +61,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvStopwatchValue"
-                    android:layout_marginStart="@dimen/_16dp"
-                    android:layout_marginEnd="@dimen/_16dp"
                     android:orientation="vertical">
 
                     <Button
@@ -87,7 +80,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_10dp"
                         android:background="@color/white"
-                        android:text="Add health problems"
+                        android:text="Add health problem"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -95,28 +88,41 @@
                     android:id="@+id/rlTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10dp"
                     android:layout_below="@+id/llAdd"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvTemp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_16dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginEnd="@dimen/_5dp"
+                        android:paddingStart="@dimen/_5dp"
+                        android:paddingEnd="@dimen/_5dp"
                         android:text="Body Temperature"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/font_16sp" />
+                        android:textSize="@dimen/_15dp" />
 
                     <EditText
                         android:id="@+id/etTempValue"
+                        style="@style/EditText"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="@dimen/_10dp"
-                        android:layout_marginEnd="@dimen/_16dp"
+                        android:layout_height="@dimen/_40dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginEnd="@dimen/_5dp"
                         android:hint="In &#xb0;F (Fahrenheit)"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:paddingStart="@dimen/_5dp"
+                        android:paddingEnd="@dimen/_5dp" />
+
+                    <View
+                        android:id="@+id/nameDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:layout_marginEnd="@dimen/_10dp"
+                        android:layout_marginBottom="@dimen/_5dp"
+                        android:background="@color/grey" />
                 </LinearLayout>
 
                 <Button

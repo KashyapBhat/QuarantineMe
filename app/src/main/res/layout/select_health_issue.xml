@@ -20,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginEnd="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
         tools:listitem="@layout/item_issues" />
 
     <TextView
@@ -29,9 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rvIssue"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginEnd="@dimen/_20dp"
-        android:padding="@dimen/_5dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:paddingTop="@dimen/_5dp"
         android:text="If you have any other specific problems, Please include it here"
         android:textSize="14sp" />
 
@@ -40,9 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvIssueWritten"
-        android:layout_marginStart="@dimen/_20dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="@dimen/_20dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
         android:gravity="top|left"
         android:inputType="textMultiLine"
         android:lines="3"

@@ -67,7 +67,7 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
     private fun customShowAndHideProgress(shouldShowProgress: Boolean) {
         if (shouldShowProgress) {
             (context as BaseActivity?)?.showProgress()
-        } else Handler().postDelayed({ (context as BaseActivity?)?.hideProgress() }, 400)
+        } else Handler().postDelayed({ (context as BaseActivity?)?.hideProgress() }, 200)
     }
 
     private fun handleQuarantineOrNot() {
@@ -93,7 +93,7 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
     }
 
     override fun handleIssuesButton(isEnabled: Boolean) {
-        btIssue?.text = if (isEnabled) "Add Image" else "Image Added"
+        btIssue?.text = if (isEnabled) "Add health problem" else "Added"
         btIssue?.setTextColor(resources.getColor(if (isEnabled) R.color.black else R.color.grey))
         btIssue?.setBackgroundColor(resources.getColor(if (isEnabled) R.color.white else R.color.darker_grey))
         btIssue?.isEnabled = isEnabled
@@ -107,7 +107,7 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
         llAdd?.visibility = if (shouldShow) View.VISIBLE else View.GONE
         rlTemp?.visibility = if (shouldShow) View.VISIBLE else View.GONE
         tvStopwatch?.text =
-            if (shouldShow) "Please enter the required data and submit." else "You will be prompted to submit your data after stopwatch ends."
+            if (shouldShow) "Please enter the following and submit." else "You will be prompted to submit your data after stopwatch ends."
         btSubmit?.visibility = if (shouldShow) View.VISIBLE else View.GONE
         tvStopwatchValue?.visibility = if (!shouldShow) View.VISIBLE else View.GONE
 
