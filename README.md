@@ -53,13 +53,10 @@ helps these people to understand whether they are safe there.
 
 ## Screenshots:
 Will be updating soon.
-<!--
 <div align="center">
- <img title="Home" src="assets/home.png" height="812" width="375" title>
- <img title="Brightness and other settings" src="assets/brightness.png" height="812" width="375">
- <img title="Landscape" src="assets/landscape_img.png" height="375" width="812">
+ <img title="1" src="0.png" height="890" width="490" title>
+ <img title="2 and other settings" src="1.png" height="890" width="490">
 </div>
--->
 
 License
 =======
