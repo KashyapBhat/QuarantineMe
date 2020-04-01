@@ -3,9 +3,18 @@
 ## OVERVIEW:
 A small virus named Corona which started in a city called Wuhan located in China has put more than 196 countries and territories in problem leading to more than 22,000 deaths all over the world as on 27th of March, 2020 is now one global pandemic for all of us. For a country like India which is highly populated, it is important to take precautionary measures to avoid a major outbreak which might lead to some of the worst situations that the country hasn’t witnessed yet. 
 
-#### Demo link: https://www.youtube.com/watch?v=kE9AclBNPX8&feature=youtu.be
+## Screenshots:
 
-#### PPT link: https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
+<div align="center">
+ <img title="1" src="0.png" height="490" width="890" title>
+ <img title="2 and other settings" src="1.png" height="490" width="890">
+</div>
+
+#### Demo link: 
+https://www.youtube.com/watch?v=kE9AclBNPX8&feature=youtu.be
+
+#### PPT link: 
+https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
 
 Features
 -----
@@ -50,16 +59,6 @@ are the measures being taken by the government  etc.. It also shows a heat map o
 helps these people to understand whether they are safe there.
 
 ```
-
-## Screenshots:
-Will be updating soon.
-<!--
-<div align="center">
- <img title="Home" src="assets/home.png" height="812" width="375" title>
- <img title="Brightness and other settings" src="assets/brightness.png" height="812" width="375">
- <img title="Landscape" src="assets/landscape_img.png" height="375" width="812">
-</div>
--->
 
 License
 =======
