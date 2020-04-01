@@ -64,17 +64,18 @@
                 <LinearLayout
                     android:id="@+id/llAdd"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/tvStopwatchValue"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="@dimen/_16dp"
+                    android:layout_marginEnd="@dimen/_16dp"
+                    android:orientation="vertical">
 
                     <Button
                         android:id="@+id/btPhoto"
                         style="@style/Button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/_16dp"
-                        android:layout_weight="0.5"
+                        android:layout_margin="@dimen/_10dp"
                         android:background="@color/white"
                         android:text="Photo Upload"
                         android:textColor="@color/black" />
@@ -84,10 +85,9 @@
                         style="@style/Button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/_16dp"
-                        android:layout_weight="0.5"
+                        android:layout_margin="@dimen/_10dp"
                         android:background="@color/white"
-                        android:text="Add issues"
+                        android:text="Add health problems"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -95,6 +95,7 @@
                     android:id="@+id/rlTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
                     android:layout_below="@+id/llAdd"
                     android:orientation="horizontal">
 
@@ -121,7 +122,7 @@
                 <Button
                     android:id="@+id/btSubmit"
                     style="@style/ButtonHome"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlTemp"
                     android:text="Submit" />
@@ -169,120 +170,6 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <RelativeLayout
-            android:id="@+id/rvCV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cvMain"
-            android:layout_marginTop="@dimen/_30dp"
-            android:padding="@dimen/_16dp">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvActive"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="@dimen/_5dp"
-                android:elevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvActive"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/darkestPrimaryColor"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="@dimen/_5dp"
-                        android:paddingBottom="@dimen/_5dp"
-                        android:text="Active\nCases"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvActiveValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="819"
-                        android:textSize="@dimen/font_16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvCured"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="@dimen/_5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvCured"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/darkestPrimaryColor"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="@dimen/_5dp"
-                        android:paddingBottom="@dimen/_5dp"
-                        android:text="Cured\nCases"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCuredValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="79"
-                        android:textSize="@dimen/font_16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvDeath"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="@dimen/_5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvDeath"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/darkestPrimaryColor"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="@dimen/_5dp"
-                        android:paddingBottom="@dimen/_5dp"
-                        android:text="Death\nCases"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvDeathValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="19"
-                        android:textSize="@dimen/font_16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rlEmergency"

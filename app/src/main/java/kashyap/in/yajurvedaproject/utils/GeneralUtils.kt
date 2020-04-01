@@ -180,7 +180,8 @@ class GeneralUtils {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
+                Manifest.permission.CALL_PHONE
             )
         }
 
@@ -288,11 +289,11 @@ class GeneralUtils {
             val country: String = addresses?.get(0)?.countryName ?: ""
             val postalCode: String = addresses?.get(0)?.postalCode ?: ""
             val knownName: String = addresses?.get(0)?.featureName ?: ""
-            Toast.makeText(
-                context,
-                " Lat: $latitude Long: $longitude /n Address: $address /n City: $city $state $country $postalCode $knownName",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                context,
+//                " Lat: $latitude Long: $longitude /n Address: $address /n City: $city $state $country $postalCode $knownName",
+//                Toast.LENGTH_SHORT
+//            ).show()
             if (address.isEmpty() || address.isBlank()) {
                 return "$city $state $country $postalCode $knownName"
             }

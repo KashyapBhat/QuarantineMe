@@ -49,6 +49,9 @@ class InfoFragment : BaseFragment(), InfoAdapter.InfoItemClickIntf {
     }
 
     override fun afterFBDataFetch() {
+        tvActiveValue?.text = quarantine?.activeCase
+        tvCuredValue?.text = quarantine?.curedCase
+        tvDeathValue?.text = quarantine?.deathCase
         infoAdapter = InfoAdapter(quarantine?.informationList ?: emptyList(), getActivity(), this)
         rvInfo?.adapter = infoAdapter
         rvInfo?.layoutManager = LinearLayoutManager(getActivity())

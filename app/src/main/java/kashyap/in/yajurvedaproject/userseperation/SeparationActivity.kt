@@ -61,10 +61,10 @@ class SeparationActivity : BaseActivity() {
 
     override fun onLocationResult(location: Location?) {
         hideProgress()
-        Toast.makeText(
-            this, "" + " Lat: " + location?.latitude + "long: " + location?.longitude,
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(
+//            this, "" + " Lat: " + location?.latitude + "long: " + location?.longitude,
+//            Toast.LENGTH_SHORT
+//        ).show()
         Log.d("Location ::::", " Lat: " + location?.latitude + "long: " + location?.longitude)
         saveUserDataToPrefs(location)
     }
