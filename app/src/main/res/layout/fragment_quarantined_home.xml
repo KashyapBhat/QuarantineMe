@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/lightest_grey"
     android:overScrollMode="never"
     android:scrollbars="none">
 
@@ -16,20 +16,21 @@
             android:id="@+id/rvBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/_5dp"
             android:overScrollMode="never" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="@dimen/_16dp"
-            android:elevation="@dimen/_5dp">
+            android:layout_margin="@dimen/_20dp"
+            android:background="@color/white"
+            android:elevation="@dimen/_10dp">
 
             <RelativeLayout
                 android:id="@+id/rlMain"
+                android:padding="@dimen/_5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -143,6 +144,7 @@
             android:layout_marginStart="@dimen/_16dp"
             android:layout_marginTop="@dimen/_10dp"
             android:layout_marginEnd="@dimen/_16dp"
+            android:background="@color/white"
             android:elevation="@dimen/_5dp">
 
             <LinearLayout
@@ -182,6 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_below="@+id/rvCV"
+            android:layout_marginTop="@dimen/_20dp"
             android:layout_marginBottom="@dimen/_16dp">
 
             <Button
