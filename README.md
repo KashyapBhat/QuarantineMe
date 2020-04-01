@@ -10,6 +10,13 @@ A small virus named Corona which started in a city called Wuhan located in China
  <img title="2 and other settings" src="1.png" height="490" width="890">
 </div>
 
+#### Demo link: 
+https://www.youtube.com/watch?v=kE9AclBNPX8&feature=youtu.be
+
+#### PPT link: 
+https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
+
+
 Features
 -----
 
@@ -53,13 +60,6 @@ are the measures being taken by the government  etc.. It also shows a heat map o
 helps these people to understand whether they are safe there.
 
 ```
-
-#### Demo link: 
-https://www.youtube.com/watch?v=kE9AclBNPX8&feature=youtu.be
-
-#### PPT link: 
-https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
-
 
 License
 =======
