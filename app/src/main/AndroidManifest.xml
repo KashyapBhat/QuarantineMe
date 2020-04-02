@@ -17,7 +17,6 @@
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -42,6 +41,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".quarantine.alarm.AlarmReceiver"
             android:enabled="true">
@@ -49,6 +49,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/splash" />
@@ -59,6 +60,11 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
+        <activity
+            android:name=".cma.CMAActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".nonquarantine.NonQuarantineActivity"
@@ -100,7 +106,6 @@
             android:name=".base.BaseActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".login.ValidateLoginActivity"
             android:configChanges="orientation|screenSize"
@@ -109,7 +114,6 @@
             android:name=".login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

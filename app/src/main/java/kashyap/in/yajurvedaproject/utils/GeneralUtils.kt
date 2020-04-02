@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager
 import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
+import kashyap.`in`.yajurvedaproject.cma.CMAActivity
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 import kashyap.`in`.yajurvedaproject.quarantine.alarm.AlarmReceiver
@@ -245,8 +246,10 @@ class GeneralUtils {
         }
 
         fun openQActivity(context: Activity?, delay: Long) {
+            val className =
+                if (BuildConfig.FLAVOR == "cma") QuarantineActivity::class.java else CMAActivity::class.java
             Handler().postDelayed({
-                context?.startActivity(Intent(context, QuarantineActivity::class.java))
+                context?.startActivity(Intent(context, className))
                 context?.finish()
             }, delay)
         }
