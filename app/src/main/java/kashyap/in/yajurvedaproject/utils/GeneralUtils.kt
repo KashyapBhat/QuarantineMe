@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager
 import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
+import kashyap.`in`.yajurvedaproject.cma.CMAActivity
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
 import kashyap.`in`.yajurvedaproject.quarantine.alarm.AlarmReceiver
@@ -245,8 +246,10 @@ class GeneralUtils {
         }
 
         fun openQActivity(context: Activity?, delay: Long) {
+            val className =
+                if (BuildConfig.FLAVOR == "cma") QuarantineActivity::class.java else CMAActivity::class.java
             Handler().postDelayed({
-                context?.startActivity(Intent(context, QuarantineActivity::class.java))
+                context?.startActivity(Intent(context, className))
                 context?.finish()
             }, delay)
         }
@@ -280,12 +283,14 @@ class GeneralUtils {
                 longitude ?: 0.0,
                 1
             )
-            val address: String = addresses?.get(0)?.getAddressLine(0) ?: ""
-            val city: String = addresses?.get(0)?.locality ?: ""
-            val state: String = addresses?.get(0)?.adminArea ?: ""
-            val country: String = addresses?.get(0)?.countryName ?: ""
-            val postalCode: String = addresses?.get(0)?.postalCode ?: ""
-            val knownName: String = addresses?.get(0)?.featureName ?: ""
+            if (addresses == null || addresses.isEmpty())
+                return ""
+            val address: String = addresses[0]?.getAddressLine(0) ?: ""
+            val city: String = addresses[0]?.locality ?: ""
+            val state: String = addresses[0]?.adminArea ?: ""
+            val country: String = addresses[0]?.countryName ?: ""
+            val postalCode: String = addresses[0]?.postalCode ?: ""
+            val knownName: String = addresses[0]?.featureName ?: ""
 //            Toast.makeText(
 //                context,
 //                " Lat: $latitude Long: $longitude /n Address: $address /n City: $city $state $country $postalCode $knownName",
@@ -313,7 +318,8 @@ class GeneralUtils {
             val alarmManager =
                 context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent =
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 System.currentTimeMillis(),

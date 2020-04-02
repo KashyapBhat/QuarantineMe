@@ -15,6 +15,25 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    flavorDimensions 'management'
+    productFlavors {
+        ema {
+            minSdkVersion 22
+            dimension = 'management'
+            applicationId 'techfor.society.quarantineprojectema'
+            targetSdkVersion 29
+            versionCode 1
+            versionName '1.0'
+        }
+        cma {
+            minSdkVersion 22
+            dimension = 'management'
+            applicationId 'techfor.society.quarantineproject'
+            targetSdkVersion 29
+            versionCode 1
+            versionName '1.0'
+        }
+    }
     buildTypes {
         debug {
             minifyEnabled false

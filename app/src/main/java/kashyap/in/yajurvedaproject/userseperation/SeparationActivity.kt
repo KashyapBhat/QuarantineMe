@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import kashyap.`in`.yajurvedaproject.BuildConfig
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.common.*
@@ -23,6 +24,18 @@ class SeparationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_separation)
         hideToolbar()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (BuildConfig.FLAVOR == "ema") {
+            tvQuarantine?.visibility = View.GONE
+            btQuarantine?.visibility = View.GONE
+            btIsolated?.visibility = View.GONE
+            isQuarantined = true
+            checkPermissionsAndRun()
+            return
+        }
         setButtons()
     }
 
@@ -41,6 +54,10 @@ class SeparationActivity : BaseActivity() {
     }
 
     override fun onAllPermissionsAcquired() {
+        if (BuildConfig.FLAVOR == "ema") {
+            getLocation()
+            return
+        }
         GeneralUtils.showDialogWithButtons(
             context,
             "Consider current location as your home location?",
@@ -79,9 +96,10 @@ class SeparationActivity : BaseActivity() {
 
     private fun saveToFirebase(location: Location?) {
         lastKnownLocation = location
+        val string = if (BuildConfig.FLAVOR == "ema") IS_QUARANTINED else IS_DOCTOR
         val init = hashMapOf(
             HOME_LOCATION to GeoPoint(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
-            IS_QUARANTINED to isQuarantined,
+            string to isQuarantined,
             HOME_ADDRESS to GeneralUtils.getAddressFromLocation(context, location)
         )
         val db = FirebaseFirestore.getInstance()
