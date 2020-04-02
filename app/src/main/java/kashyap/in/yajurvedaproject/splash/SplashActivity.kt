@@ -13,19 +13,21 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.login.LoginActivity
+import kashyap.`in`.yajurvedaproject.utils.BiometricUtils
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils.Companion.openQActivity
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseActivity(), BiometricUtils.BiometricIntf {
 
-    private var myBiometricPrompt: BiometricPrompt? = null
-    private var promptInfo: PromptInfo? = null
+    private var biometricUtils: BiometricUtils? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_activity)
+        biometricUtils = BiometricUtils(context, activity, this)
     }
 
     override fun onResume() {
@@ -37,7 +39,7 @@ class SplashActivity : BaseActivity() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                     && PrefUtils.hasQuarantineValue(context) && PrefUtils.isQuarantined(context)
-            -> biometrics()
+            -> biometricUtils?.biometrics()
             PrefUtils.hasQuarantineValue(context) && !PrefUtils.isQuarantined(context)
             -> openQActivity(this, 3 * 1000)
             else -> Handler().postDelayed({
@@ -48,73 +50,6 @@ class SplashActivity : BaseActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun biometrics() {
-        val biometricManager = BiometricManager.from(this)
-        when (biometricManager.canAuthenticate()) {
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE, BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                openQActivity(this, 1300)
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
-                showSnackBar("Please enable fingerprint / face detection before we go ahead",
-                    "Go to settings",
-                    Runnable { openSettings() })
-            else -> checkBiometrics()
-        }
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private fun checkBiometrics() {
-        val newExecutor: Executor = Executors.newSingleThreadExecutor()
-        if (myBiometricPrompt == null)
-            myBiometricPrompt = getBiometricPrompt(newExecutor)
-        if (promptInfo == null)
-            promptInfo = PromptInfo.Builder()
-                .setTitle("Biometric")
-                .setSubtitle("Please use your fingerprint / face recognition")
-                .setDescription("")
-                .setNegativeButtonText("Cancel")
-                .build()
-        if (promptInfo != null)
-            myBiometricPrompt?.authenticate(promptInfo!!)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getBiometricPrompt(newExecutor: Executor): BiometricPrompt? {
-        return BiometricPrompt(this,
-            newExecutor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(
-                    errorCode: Int,
-                    errString: CharSequence
-                ) {
-                    super.onAuthenticationError(errorCode, errString)
-                    when (errorCode) {
-                        BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_UNABLE_TO_PROCESS, BiometricConstants.ERROR_HW_NOT_PRESENT ->
-                            openQActivity(activity, 1300)
-                    }
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    runOnUiThread {
-                        openQActivity(activity, 300)
-                    }
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    runOnUiThread {
-                        showSnackBar(
-                            "Authentication error",
-                            "Retry",
-                            Runnable { restartBiometrics() })
-                    }
-                }
-            })
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun restartBiometrics() {
         finish()
         startActivity(intent)
@@ -128,6 +63,22 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun onLocationResult(location: Location?) {
+    }
+
+    override fun onAuthenticationSuccess() {
+        openQActivity(activity, 300)
+    }
+
+    override fun onAuthenticationFailed() {
+        restartBiometrics()
+    }
+
+    override fun noHardwareFound() {
+        openQActivity(activity, 1300)
+    }
+
+    override fun biometricNotEnrolled() {
+        openSettings()
     }
 
 }

@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingBottom="@dimen/_5dp"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/_5dp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvMain"
@@ -30,9 +30,9 @@
 
             <RelativeLayout
                 android:id="@+id/rlMain"
-                android:padding="@dimen/_5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5dp">
 
                 <TextView
                     android:id="@+id/tvStopwatch"
@@ -43,25 +43,16 @@
                     android:layout_alignParentEnd="true"
                     android:background="@color/white"
                     android:padding="@dimen/_5dp"
-                    android:text="You will be prompted to submit your data after stopwatch ends."
+                    android:text="Please enter the following and submit."
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_16sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvStopwatchValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvStopwatch"
-                    android:padding="@dimen/_5dp"
-                    android:text="00:00:00"
-                    android:textSize="@dimen/font_20sp" />
 
                 <LinearLayout
                     android:id="@+id/llAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvStopwatchValue"
+                    android:layout_below="@+id/tvStopwatch"
                     android:orientation="vertical">
 
                     <Button
@@ -70,8 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_10dp"
-                        android:background="@color/white"
-                        android:text="Photo Upload"
+                        android:background="@drawable/round_corner_rectangle"
+                        android:text="Photo upload"
                         android:textColor="@color/black" />
 
                     <Button
@@ -80,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_10dp"
-                        android:background="@color/white"
+                        android:background="@drawable/round_corner_rectangle"
                         android:text="Add health problem"
                         android:textColor="@color/black" />
                 </LinearLayout>

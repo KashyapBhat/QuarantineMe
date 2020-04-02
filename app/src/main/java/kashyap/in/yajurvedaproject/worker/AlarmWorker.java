@@ -48,13 +48,13 @@ public class AlarmWorker extends Worker {
                     AlarmWorker.class).setConstraints(constraints)
                     .addTag(AlarmWorker.TAG)
                     .setInitialDelay(timeDiff, TimeUnit.SECONDS).build();
-            WorkManager.getInstance(context).beginUniqueWork(uniqueWorkerName, ExistingWorkPolicy.REPLACE, locationWork).enqueue();
+            WorkManager.getInstance().beginUniqueWork(uniqueWorkerName, ExistingWorkPolicy.REPLACE, locationWork).enqueue();
         }
     }
 
     public static void stopLogoutWorker(Context context, String uniqueWorkerName) {
         Log.e("Logout", "Logout stop");
-        WorkManager.getInstance(context).cancelUniqueWork(uniqueWorkerName);
+        WorkManager.getInstance().cancelUniqueWork(uniqueWorkerName);
     }
 
     private static long getTimeDiff(int Hours, int Min, boolean login) {

@@ -3,6 +3,7 @@ package kashyap.`in`.yajurvedaproject.quarantine
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -13,13 +14,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import kashyap.`in`.yajurvedaproject.R
 import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
+import kashyap.`in`.yajurvedaproject.utils.BiometricUtils
+import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_quarantined_home.*
 
-class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
+class QuarantinedHomeFragment : BaseFragment(), HomeContract.view, BiometricUtils.BiometricIntf {
 
     private var dialog: BottomSheetDialog? = null
     private var homePresenter: HomeFragmentPresenter? = null
+    private var biometricUtils: BiometricUtils? = null
 
     companion object {
         @JvmStatic
@@ -49,6 +53,7 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        biometricUtils = BiometricUtils(context, activity as BaseActivity?, this)
     }
 
     override fun afterFBDataFetch() {
@@ -57,7 +62,11 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
         handleQuarantineOrNot()
         homePresenter?.showBanner(rvBanner)
         homePresenter?.handleStopWatch()
-        btPhoto?.setOnClickListener { homePresenter?.takeImage(this) }
+        btPhoto?.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                biometricUtils?.biometrics()
+            }
+        }
         btIssue?.setOnClickListener { dialog = homePresenter?.showIssue() }
         btSubmit?.setOnClickListener { homePresenter?.onSubmitButtonClick(etTempValue) }
         btEmergency?.setOnClickListener { homePresenter?.handleEmergencyButton(getActivity()) }
@@ -99,20 +108,6 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
         btIssue?.isEnabled = isEnabled
     }
 
-    override fun showStopWatchText(text: String) {
-        tvStopwatchValue?.text = text
-    }
-
-    override fun handleSubmitScreen(shouldShow: Boolean) {
-        llAdd?.visibility = if (shouldShow) View.VISIBLE else View.GONE
-        rlTemp?.visibility = if (shouldShow) View.VISIBLE else View.GONE
-        tvStopwatch?.text =
-            if (shouldShow) "Please enter the following and submit." else "You will be prompted to submit your data after stopwatch ends."
-        btSubmit?.visibility = if (shouldShow) View.VISIBLE else View.GONE
-        tvStopwatchValue?.visibility = if (!shouldShow) View.VISIBLE else View.GONE
-
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         dialog?.dismiss()
@@ -130,5 +125,27 @@ class QuarantinedHomeFragment : BaseFragment(), HomeContract.view {
     }
 
     override fun hideProgress() {
+    }
+
+    override fun onAuthenticationSuccess() {
+        homePresenter?.takeImage(this)
+    }
+
+    override fun onAuthenticationFailed() {
+        restartBiometrics()
+    }
+
+    override fun noHardwareFound() {
+        homePresenter?.takeImage(this)
+    }
+
+    override fun biometricNotEnrolled() {
+        (activity as BaseActivity).openSettings()
+    }
+
+    private fun restartBiometrics() {
+        activity?.finish()
+        startActivity(activity?.intent)
+        activity?.overridePendingTransition(R.anim.enter, R.anim.exit)
     }
 }

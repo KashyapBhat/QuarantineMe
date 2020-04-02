@@ -78,6 +78,7 @@ class SeparationActivity : BaseActivity() {
     }
 
     private fun saveToFirebase(location: Location?) {
+        lastKnownLocation = location
         val init = hashMapOf(
             HOME_LOCATION to GeoPoint(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
             IS_QUARANTINED to isQuarantined,

@@ -52,6 +52,7 @@ abstract class BaseActivity : AppCompatActivity(), NetworkReceiver.NetworkChange
     protected lateinit var activity: BaseActivity
     protected var quarantine: Quarantine? = null
     private var locationFetcher: LocationUtils? = null
+    public var lastKnownLocation: Location? = null
     private var onActivityResultListener: OnActivityResultListener? = null
 
     override fun setContentView(layoutResID: Int) {

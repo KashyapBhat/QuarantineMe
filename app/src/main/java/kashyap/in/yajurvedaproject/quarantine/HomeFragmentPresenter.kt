@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.Location
 import android.net.Uri
 import android.os.CountDownTimer
 import android.provider.MediaStore
@@ -22,24 +23,27 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.face.Face
 import com.google.android.gms.vision.face.FaceDetector
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kashyap.`in`.yajurvedaproject.R
-import kashyap.`in`.yajurvedaproject.common.COUNT_DOWN_START_TIME
-import kashyap.`in`.yajurvedaproject.common.ISSUES_DOC
-import kashyap.`in`.yajurvedaproject.common.ISSUE_SELECTED
-import kashyap.`in`.yajurvedaproject.common.WRITTEN_ISSUE
+import kashyap.`in`.yajurvedaproject.base.BaseActivity
+import kashyap.`in`.yajurvedaproject.common.*
 import kashyap.`in`.yajurvedaproject.issue.IssueAdapter
 import kashyap.`in`.yajurvedaproject.models.Quarantine
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantinedHomeFragment.Companion.CAMERA_REQUEST
 import kashyap.`in`.yajurvedaproject.utils.GeneralUtils
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import java.io.ByteArrayOutputStream
+import java.util.concurrent.TimeUnit
 
 class HomeFragmentPresenter(
     val context: Context?,
@@ -82,73 +86,13 @@ class HomeFragmentPresenter(
     }
 
     fun handleStopWatch() {
-        // TODO: Save to firebase
-        // Handle timings
-        val xMins: Long = quarantine?.xMins ?: 15
-        val timeRemaining: Long = getTimeRemaining()
-        view?.handleSubmitScreen(false)
-        if (timeRemaining > xMins) {
-            view?.handleSubmitScreen(true)
-        } else {
-            object : CountDownTimer(xMins - timeRemaining, 1000) {
-
-                override fun onFinish() {
-                    view?.handleSubmitScreen(true)
-                }
-
-                override fun onTick(millisUntilFinished: Long) {
-                    val sec: Int = (millisUntilFinished / 1000).toInt()
-                    val min: Int = (sec / 60)
-                    val secRem: Int = (sec % 60)
-                    view?.showStopWatchText(min.toString().plus(":").plus(secRem.toString()))
-                }
-            }.start()
-        }
-    }
-
-    private fun getTimeRemaining(): Long {
-        val currentTime: Long = System.currentTimeMillis()
-        var countDownStartTime: Long = 0
-        var countDownFBStartTime: Long = 0
-        if (!PrefUtils.hasKey(context, COUNT_DOWN_START_TIME)) {
-            countDownStartTime = currentTime
-            PrefUtils.saveToPrefs(context, COUNT_DOWN_START_TIME, currentTime)
-        } else {
-            countDownStartTime =
-                PrefUtils.getFromPrefs(
-                    context,
-                    COUNT_DOWN_START_TIME,
-                    currentTime
-                ) as Long
-        }
-
-        val db = FirebaseFirestore.getInstance()
-        db.collection("userData")
-            .document("userId1")
-            .get()
-            .addOnSuccessListener {
-                Log.d("Firebase Document:", "Data: " + it.data?.entries)
-                countDownFBStartTime =
-                    it?.data?.get(COUNT_DOWN_START_TIME) as Long? ?: 0.toLong()
-            }.addOnFailureListener {
-                Log.d("Firebase Document:", "Data: $it")
-            }
-        if (countDownFBStartTime == 0.toLong()) {
-            val user = hashMapOf(
-                "countDownStartTime" to countDownStartTime
-            )
-            db.collection("userData")
-                .document("userId1")
-                .set(user)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")
-                }
-                .addOnFailureListener { e ->
-                    Log.w("TAG", "Error adding document", e)
-                }
-
-        }
-        return currentTime - countDownStartTime
+        val xMins: Long = quarantine?.xMins ?: 16
+//        if (!PrefUtils.hasKey(context, IS_XMIN_ALARM_ALREADY_SET) ||
+//            !(PrefUtils.getFromPrefs(context, IS_XMIN_ALARM_ALREADY_SET, false) as Boolean)
+//        ) {
+        GeneralUtils.createAlarmManager(context?.applicationContext, 1)
+        PrefUtils.saveToPrefs(context, IS_XMIN_ALARM_ALREADY_SET, true)
+//        }
     }
 
     fun takeImage(activity: Fragment?) {
@@ -207,11 +151,14 @@ class HomeFragmentPresenter(
 
     private fun storeTemperatureValue(etTempValue: EditText?) {
         val user = hashMapOf(
-            "Temperature" to etTempValue?.text?.toString()
+            "Temperature" to etTempValue?.text?.toString(),
+            "ImageUploadedTime" to "Date: ".plus(GeneralUtils.getCurrentDate())
+                .plus(" Time: ").plus(GeneralUtils.getCurentTime()),
+            "ImageUploadedTimeStamp" to FieldValue.serverTimestamp()
         )
         val db = FirebaseFirestore.getInstance()
-        db.collection("userData")
-            .document("userId1")
+        db.collection(PrefUtils.userId(context))
+            .document(SUBMIT_DATA)
             .set(user)
             .addOnSuccessListener { documentReference ->
                 Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")
@@ -299,6 +246,7 @@ class HomeFragmentPresenter(
     }
 
     fun handleEmergencyButton(activity: FragmentActivity?) {
+        onEmergencyButtonClick((activity as BaseActivity?)?.lastKnownLocation)
         val phNumber = quarantine?.emergencyNumber ?: "9483214259"
         val uri = Uri.parse("tel:".plus(phNumber.trim()).trim())
         try {
@@ -318,6 +266,26 @@ class HomeFragmentPresenter(
             callIntent.data = uri
             activity?.startActivity(callIntent)
         }
+    }
+
+    private fun onEmergencyButtonClick(location: Location?) {
+        val user = hashMapOf(
+            "LastAppOpenedStamp" to FieldValue.serverTimestamp(),
+            "LastLocation" to GeoPoint(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
+            "LastAddress" to GeneralUtils.getAddressFromLocation(context, location),
+            USER_PHONE_NUMBER to PrefUtils.userId(context),
+            USER_NAME to PrefUtils.getFromPrefs(context, USER_NAME, "")
+        )
+        val db = FirebaseFirestore.getInstance()
+        db.collection(PrefUtils.userId(context))
+            .document(EMERGENCY_CLICK)
+            .set(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d("TAG", "DocumentSnapshot added with ID: $documentReference")
+            }
+            .addOnFailureListener { e ->
+                Log.w("TAG", "Error adding document", e)
+            }
     }
 
     class SnapHelperOneByOne : LinearSnapHelper() {

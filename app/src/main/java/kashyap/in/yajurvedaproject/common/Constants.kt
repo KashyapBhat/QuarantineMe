@@ -51,11 +51,15 @@ const val USER_NAME = "UserName"
 const val USER_EMAIL = "UserEmail"
 const val ISSUE_SELECTED = "IssuesSelected"
 const val WRITTEN_ISSUE = "WrittenIssue"
+const val IS_XMIN_ALARM_ALREADY_SET = "isXMinAlarmAlreadySet"
 
 // Firebase Document Names
+const val APP_LAST_USE = "0Home"
 const val INIT_DOC = "1Init"
 const val PROFILE_DOC = "2Profile"
-const val ISSUES_DOC = "3Issues"
+const val ISSUES_DOC = "3HealthIssues"
+const val SUBMIT_DATA = "4DataSubmit"
+const val EMERGENCY_CLICK = "5EmergencyClicked"
 
 //View related
 

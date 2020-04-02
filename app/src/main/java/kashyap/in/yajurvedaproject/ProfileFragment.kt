@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
-import kashyap.`in`.yajurvedaproject.common.HOME_ADDRESS
-import kashyap.`in`.yajurvedaproject.common.PROFILE_DOC
-import kashyap.`in`.yajurvedaproject.common.USER_EMAIL
-import kashyap.`in`.yajurvedaproject.common.USER_NAME
+import kashyap.`in`.yajurvedaproject.common.*
 import kashyap.`in`.yajurvedaproject.utils.PrefUtils
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -69,7 +66,8 @@ class ProfileFragment : BaseFragment() {
         val init = hashMapOf(
             USER_NAME to userName,
             USER_EMAIL to userEmail,
-            HOME_ADDRESS to userAddress
+            HOME_ADDRESS to userAddress,
+            USER_PHONE_NUMBER to PrefUtils.userId(context)
         )
         val db = FirebaseFirestore.getInstance()
         db.collection(PrefUtils.userId(context))

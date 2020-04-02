@@ -1,10 +1,7 @@
 package kashyap.`in`.yajurvedaproject.utils
 
 import android.Manifest
-import android.app.Activity
-import android.app.Dialog
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.location.Address
@@ -21,7 +18,6 @@ import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.FragmentManager
@@ -30,6 +26,7 @@ import kashyap.`in`.yajurvedaproject.base.BaseActivity
 import kashyap.`in`.yajurvedaproject.base.BaseFragment
 import kashyap.`in`.yajurvedaproject.custom.CustomSnackbar
 import kashyap.`in`.yajurvedaproject.quarantine.QuarantineActivity
+import kashyap.`in`.yajurvedaproject.quarantine.alarm.AlarmReceiver
 import kashyap.`in`.yajurvedaproject.splash.SplashActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -247,10 +244,10 @@ class GeneralUtils {
             transaction?.commit()
         }
 
-        fun openQActivity(context: Activity, delay: Long) {
+        fun openQActivity(context: Activity?, delay: Long) {
             Handler().postDelayed({
-                context.startActivity(Intent(context, QuarantineActivity::class.java))
-                context.finish()
+                context?.startActivity(Intent(context, QuarantineActivity::class.java))
+                context?.finish()
             }, delay)
         }
 
@@ -272,7 +269,7 @@ class GeneralUtils {
         }
 
         private fun getAddressFromLatLong(
-            context: Context,
+            context: Context?,
             latitude: Double?,
             longitude: Double?
         ): String {
@@ -300,7 +297,7 @@ class GeneralUtils {
             return address
         }
 
-        fun getAddressFromLocation(context: Context, location: Location?): String {
+        fun getAddressFromLocation(context: Context?, location: Location?): String {
             return getAddressFromLatLong(context, location?.latitude, location?.longitude)
         }
 
@@ -310,6 +307,20 @@ class GeneralUtils {
 
         fun getCurrentDate(): String {
             return SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        }
+
+        fun createAlarmManager(context: Context?, minutes: Long, cancelable: Boolean = false) {
+            val alarmManager =
+                context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis(),
+                minutes * 60000,
+                pendingIntent
+            )
+            if (cancelable) alarmManager.cancel(pendingIntent);
         }
     }
 }
