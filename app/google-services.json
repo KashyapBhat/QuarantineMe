@@ -15,6 +15,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "787841117881-ngoa63rpnli1eejgr6vo11nm3ri104lr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "techfor.society.quarantineproject",
+            "certificate_hash": "a0c02bc86b22d72ef298886ca39997b0f3eb9544"
+          }
+        },
+        {
+          "client_id": "787841117881-ifm3a7anr82roke427p5hubkssaqdpcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY8CwrrupU89FGq7UOyYXk769wcaNxIQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787841117881-ifm3a7anr82roke427p5hubkssaqdpcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787841117881:android:c1bb3dc091f255e494b568",
+        "android_client_info": {
+          "package_name": "techfor.society.quarantineprojectema"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "787841117881-ifm3a7anr82roke427p5hubkssaqdpcm.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Quarantine Me</string>
+    <string name="please_update_app">%s Update</string>
+    <string name="please_update_app_desc">Please update to the latest version of %s, We have more features for you.</string>
+    <string name="update">Update</string>
+    <string name="menu_one">ಕಾಂತಿ ಆಯ್ಕೆ</string>
+    <string name="menu_two">ದೃಷ್ಟಿ ಕೋನ</string>
+    <string name="menu_three">ನೆನಪು ಪತ್ರ</string>
+    <string name="menu_four">ಹಂಚಿ</string>
+    <string name="menu_five">ಗೋತ್ರಾಭಿವಂದನೆ</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error">There was an error while loading…</string>
+    <string name="reload">Reload</string>
+    <string name="retry">Retry</string>
+    <string name="internet_not_connected">Please check your internet connection</string>
+    <string name="open_settings">Please open Settings and enable %s permission.</string>
+    <string name="change_permissions">Change Permissions</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="grant_permission_to_modify_settings">Please grant permissions to modify system setting for this facility</string>
+    <string name="remainder_already_set">Remainder is already set, do you want to remove it or update it?</string>
+    <string name="remainder">Reminder</string>
+    <string name="remove">Remove</string>
+    <string name="utf_8">UTF-8</string>
+    <string name="not_below_m">This functionality works only for devices after OS version Marshmallow</string>
+    <string name="sorry">Sorry!</string>
+    <string name="opt1">Home</string>
+    <string name="opt2">Info</string>
+    <string name="opt3">Activities</string>
+    <string name="opt4">Profile</string>
+</resources>
