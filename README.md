@@ -4,7 +4,7 @@
 Be a hero by doing nothing.
 
 ### Overview:
-A small virus named Corona which started in a city called Wuhan located in China has put more than 196 countries and territories in problem leading to more than 22,000 deaths all over the world as on 27th of March, 2020 is now one global pandemic for all of us. For a country like India which is highly populated, it is important to take precautionary measures to avoid a major outbreak which might lead to some of the worst situations that the country hasn’t witnessed yet. 
+An android application developed in a hackathon conducted by Jharkhand State Government & Rocketium Bangalore to build solutions to fight Covid-19.
 
 #### PPT link: 
 https://docs.google.com/presentation/d/1eRRGSENLPoCpdDRFLEBdDMpfAArCLjpP5cW6TvrdggY/edit?usp=sharing
